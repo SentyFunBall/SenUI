@@ -7,20 +7,34 @@
 ---Global class for all SenUI classes to inherit from
 ---@class BaseClass
 SenUI.Common.BaseClass = {
+    ---@section new Creates a new object
+    ---@param class object Class to create an object of
+    ---@return object object New object
+    new = function(class)
+        --copy both the provided class and baseclass into this and return this
+        local this = {}
+        this = SenUI.Common.BaseClass.copy(this, class)
+        this = SenUI.Common.BaseClass.copy(this, SenUI.Common.BaseClass)
+        this.__c = class.__c
+        return this
+    end,
+    ---@endsection
+
     ---@section typeof Returns the type of the object
-    ---@param this BaseClass
+    ---@param self BaseClass
     ---@return string type Type of the object
-    typeof = function(this)
-        return this.__c
+    typeof = function(self)
+        return self.__c
     end,
     ---@endsection
 
     ---@section copy Copies data from (from) to (to)
-    ---@param from BaseClass
-    ---@param to any destination to copy into
+    ---@param self BaseClass
+    ---@param to? any destination to copy into
     ---@return table to Destination table
-    copy = function(from, to)
-        for k, v in pairs(from) do
+    copy = function(self, to)
+        to = to or {}
+        for k, v in pairs(self) do
             to[k] = v
         end
         return to
@@ -28,14 +42,14 @@ SenUI.Common.BaseClass = {
     ---@endsection
 
     ---@section length Returns the length of the object
-    ---@param this BaseClass
+    ---@param self BaseClass
     ---@return number length Length of the object
-    length = function(this, recursive)
+    length = function(self, recursive)
         local count = 0
-        for _ in pairs(this) do
+        for _ in pairs(self) do
             count = count + 1
             if recursive then
-                count = count + this:length(true)
+                count = count + self:length(true)
             end
         end
         return count

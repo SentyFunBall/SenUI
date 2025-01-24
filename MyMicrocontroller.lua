@@ -48,8 +48,26 @@ end
 require("SenUI")
 
 color = SenUI.Color.new(255, 0, 0)
+color2 = color:copy()
+
+tick = 0
+
+function onTick()
+    color2 = color2:convertToHSV()
+    if input.getBool(1) and color2.type == "HSV" then
+        --rainbow mode
+        color2.h = (color2.h + 1) % 360
+    end
+end
 
 function onDraw()
+    screen.setColor(255,255,255)
+    screen.drawText(0,0,"R:"..color.r)
+    screen.drawText(0,7,"CLASS:"..color:typeof())
+    screen.drawText(0,14,"MODE:"..color.type)
+    screen.drawText(30,0,"H:"..(color2.h and color2.h or "nil"))
     screen.setColor(color:open())
-    screen.drawRectF(0,0,32,32)
+    screen.drawRectF(20,20,10,10)
+    screen.setColor(color2:convertToRGB():open())
+    screen.drawRectF(40,20,10,10)
 end

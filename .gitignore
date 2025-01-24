@@ -5,3 +5,5 @@ _build/_build.lua
 _/build/libs/.DS_STORE
 .DS_STORE
 .vscode
+SenUI.code-workspace
+_build/_debug_simulator_log.txt
