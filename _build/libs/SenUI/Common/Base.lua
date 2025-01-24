@@ -13,8 +13,8 @@ SenUI.Common.BaseClass = {
     new = function(class)
         --copy both the provided class and baseclass into this and return this
         local this = {}
-        this = SenUI.Common.BaseClass.copy(this, class)
         this = SenUI.Common.BaseClass.copy(this, SenUI.Common.BaseClass)
+        this = SenUI.Common.BaseClass.copy(this, class)
         this.__c = class.__c
         return this
     end,
