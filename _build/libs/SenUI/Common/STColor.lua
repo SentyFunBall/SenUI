@@ -22,8 +22,8 @@ SenUI.Color = {
     ---@param r number Red value
     ---@param g number Green value
     ---@param b number Blue value
-    ---@overload fun(rgbTable):Color
-    ---@return Color color Color object
+    ---@overload fun(rgbTable):STColor
+    ---@return STColor color Color object
     new = function(r, g, b)
         local this = SenUI.Common.BaseClass.new(SenUI.Color)
         if type(r) == "table" then
@@ -39,9 +39,9 @@ SenUI.Color = {
         return this
     end,
     ---@endsection
-    
+
     ---@section unpack Unpacks the color object into a table
-    ---@param self Color
+    ---@param self STColor
     ---@param mode string Mode to unpack the color in
     ---@overload fun():table
     ---@return number number Unpacked color R/H
@@ -65,8 +65,8 @@ SenUI.Color = {
     ---@endsection
 
     ---@section convertToHSV Converts RGB to HSV via a table
-    ---@param self Color
-    ---@return Color color Color object
+    ---@param self STColor
+    ---@return STColor color Color object
     convertToHSV = function(self)
         if self.type == "RGB" then
             local r, g, b = self:open("flat")
@@ -86,10 +86,10 @@ SenUI.Color = {
         return self
     end,
     ---@endsection
-    
+
     ---@section converToRGB Converts HSV to RGB via a table
-    ---@param self Color
-    ---@return Color color Color object
+    ---@param self STColor
+    ---@return STColor color Color object
     convertToRGB = function(self)
         if self.type == "HSV" then
             local h, s, v = self:open("flat")
@@ -120,7 +120,7 @@ SenUI.Color = {
         return {h * 360, s * 255, v * 255}
     end,
     ---@endsection
-    
+
     ---@section HSVtoRGB Converts HSV table to RGB table
     ---@param hsvTable table HSV table
     ---@return table rgbTable RGB table
@@ -129,6 +129,19 @@ SenUI.Color = {
         local i, f, p, q, t = math.floor(h * 6), h * 6 - math.floor(h * 6), v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
         local r, g, b = (i == 0 and v or i == 1 and q or i == 2 and p or i == 3 and p or i == 4 and t or v), (i == 0 and t or i == 1 and v or i == 2 and v or i == 3 and q or i == 4 and p or p), (i == 0 and p or i == 1 and p or i == 2 and t or i == 3 and v or i == 4 and v or q)
         return {r * 255, g * 255, b * 255}
+    end,
+    ---@endsection
+    
+    ---@section gammaCorrect Gamma corrects the color for Stormworks terrible gamma
+    ---@param self STColor
+    ---@return STColor color Color object
+    gammaCorrect= function(self)
+        local _ = {}
+        _[1],_[2],_[3]=self:open("flat")
+        for i,v in pairs(_) do
+            _[i]=_[i]^2.2/255^2.2*_[i]
+        end
+        return SenUI.Color.new(_)
     end,
     ---@endsection
 }
