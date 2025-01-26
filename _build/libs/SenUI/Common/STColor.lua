@@ -11,6 +11,7 @@ require("SenUI.Common.Base")
 ---@field r number Red value
 ---@field g number Green value
 ---@field b number Blue value
+---@field a number Alpha value
 ---@field h number Hue value
 ---@field s number Saturation value
 ---@field v number Value value
@@ -22,18 +23,22 @@ SenUI.Color = {
     ---@param r number Red value
     ---@param g number Green value
     ---@param b number Blue value
-    ---@overload fun(rgbTable):STColor
+    ---@overload fun(rgb:table):STColor
+    ---@overload fun(r:number, g:number, b:number, a:number):STColor
+    ---@overload fun(rgba:table):STColor
     ---@return STColor color Color object
-    new = function(r, g, b)
+    new = function(r, g, b, a)
         local this = SenUI.Common.BaseClass.new(SenUI.Color)
         if type(r) == "table" then
             this.r = r[1]
             this.g = r[2]
             this.b = r[3]
+            this.a = r[4] or 255
         else
             this.r = r
             this.g = g
             this.b = b
+            this.a = a or 255
         end
         this.type = "RGB"
         return this
@@ -47,18 +52,25 @@ SenUI.Color = {
     ---@return number number Unpacked color R/H
     ---@return number number Unpacked color G/S
     ---@return number number Unpacked color B/V
+    ---@return number number Unpacked color A
     open = function(self, mode)
         if mode == "flat" then
             if self.type == "HSV" then
-                return self.h/360, self.s/255, self.v/255
+                return self.h/360, self.s/255, self.v/255, self.a/255
             else
-                return self.r/255, self.g/255, self.b/255
+                return self.r/255, self.g/255, self.b/255, self.a/255
+            end
+        elseif mode == "table" then
+            if self.type == "HSV" then
+                return {self.h, self.s, self.v, self.a}
+            else
+                return {self.r, self.g, self.b, self.a}
             end
         else
             if self.type == "HSV" then
-                return self.h, self.s, self.v
+                return self.h, self.s, self.v, self.a
             else
-                return self.r, self.g, self.b
+                return self.r, self.g, self.b, self.a
             end
         end
     end,
@@ -69,7 +81,7 @@ SenUI.Color = {
     ---@return STColor color Color object
     convertToHSV = function(self)
         if self.type == "RGB" then
-            local r, g, b = self:open("flat")
+            local r, g, b, a = self:open("flat")
             self.r,self.g,self.b = nil,nil,nil
             local max, min, d = math.max(r, g, b), math.min(r, g, b), math.max(r, g, b) - math.min(r, g, b)
             local h, s, v = 0, (max == 0 and 0 or d / max), max
@@ -80,6 +92,7 @@ SenUI.Color = {
             self.h = h * 360
             self.s = s * 255
             self.v = v * 255
+            self.a = a * 255
             self.type = "HSV"
             return self
         end
@@ -92,7 +105,7 @@ SenUI.Color = {
     ---@return STColor color Color object
     convertToRGB = function(self)
         if self.type == "HSV" then
-            local h, s, v = self:open("flat")
+            local h, s, v, a = self:open("flat")
             self.h,self.s,self.v = nil,nil,nil
             local f = h * 6 - math.floor(h * 6)
             local i, p, q, t = math.floor(h * 6), v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
@@ -100,6 +113,7 @@ SenUI.Color = {
             self.r = r * 255
             self.g = g * 255
             self.b = b * 255
+            self.a = a * 255
             self.type = "RGB"
             return self
         end
@@ -137,7 +151,7 @@ SenUI.Color = {
     ---@return STColor color Color object
     gammaCorrect= function(self)
         local _ = {}
-        _[1],_[2],_[3]=self:open("flat")
+        _=self:open("table")
         for i,v in pairs(_) do
             _[i]=_[i]^2.2/255^2.2*_[i]
         end

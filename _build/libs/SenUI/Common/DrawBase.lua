@@ -12,14 +12,20 @@ require("SenUI.Common.STColor")
 SenUI.Common.DrawBase = {
     ---@section setColor Sets the color of the display
     ---@param color STColor Color to set the display to
-    setColor = function(color)
+    ---@param correctGamma? boolean Whether to correct the gamma of the color (Default true)
+    setColor = function(color, correctGamma)
+        correctGamma = correctGamma or true
         if color.type == "RGB" then
-            local correctColor = color:gammaCorrect()
-            screen.setColor(correctColor:open("flat"))
+            if correctGamma then
+                color = color:gammaCorrect()
+            end
+            screen.setColor(color:open())
         else
             color = color:convertToRGB()
-            local correctColor = color:gammaCorrect()
-            screen.setColor(correctColor:open("flat"))
+            if correctGamma then
+                color = color:gammaCorrect()
+            end
+            screen.setColor(color:open())
         end
     end,
     ---@endsection
@@ -30,7 +36,7 @@ SenUI.Common.DrawBase = {
     ---@param w number Width of the rectangle
     ---@param h number Height of the rectangle
     drawRoundedRect = function(x, y, w, h)
-        screen.drawRect(x + 1, y + 1, w - 1, h - 1)     --body
+        screen.drawRectF(x + 1, y + 1, w - 1, h - 1)     --body
         screen.drawLine(x + 2, y, x + w - 1, y)         --top
         screen.drawLine(x + 2, y + h, x + w - 1, y + h) --bottom
         screen.drawLine(x, y + 2, x, y + h - 1)         --left
