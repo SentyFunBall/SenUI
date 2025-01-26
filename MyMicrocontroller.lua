@@ -52,6 +52,12 @@ color2 = color:copy()
 
 tick = 0
 
+canvas = SenUI.Canvas.new()
+bgColor = SenUI.Color.new(200, 200, 200)
+txColor = SenUI.Color.new(100, 100, 100)
+newTog = SenUI.Toggle.new(true, "Toggle", bgColor, txColor)
+canvas:addElement(newTog)
+
 function onTick()
     color2 = color2:convertToHSV()
     if input.getBool(1) and color2.type == "HSV" then
@@ -70,4 +76,6 @@ function onDraw()
     screen.drawRectF(20,20,10,10)
     screen.setColor(color2:convertToRGB():open())
     screen.drawRectF(40,20,10,10)
+
+    canvas:draw()
 end
