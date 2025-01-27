@@ -48,15 +48,12 @@ end
 require("SenUI")
 
 color = SenUI.Color.new(255, 0, 0)
-color2 = color:copy()
+color2 = SenUI.Copy(color, {})
 
 tick = 0
 
 canvas = SenUI.Canvas.new()
-bgColor = SenUI.Color.new(200, 200, 200)
-txColor = SenUI.Color.new(100, 100, 100)
-newTog = SenUI.Toggle.new(true, "Toggle", bgColor, txColor)
-canvas:addElement(newTog)
+canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
 function onTick()
     color2 = color2:convertToHSV()
@@ -69,9 +66,8 @@ end
 function onDraw()
     screen.setColor(255,255,255)
     screen.drawText(0,0,"R:"..color.r)
-    screen.drawText(0,7,"CLASS:"..color:typeof())
     screen.drawText(0,14,"MODE:"..color.type)
-    screen.drawText(30,0,"H:"..(color2.h and color2.h or "nil"))
+    screen.drawText(30,0,"H:"..color2.h)
     screen.setColor(color:open())
     screen.drawRectF(20,20,10,10)
     screen.setColor(color2:convertToRGB():open())

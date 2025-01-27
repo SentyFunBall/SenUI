@@ -8,7 +8,7 @@ require("SenUI.Common.Base")
 require("SenUI.Common.STColor")
 
 ---General drawing helper functions
----@class DrawBase : BaseClass
+---@class DrawBase
 SenUI.Common.DrawBase = {
     ---@section setColor Sets the color of the display
     ---@param color STColor Color to set the display to

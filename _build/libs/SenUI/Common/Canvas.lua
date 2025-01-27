@@ -7,7 +7,7 @@
 require("SenUI.Common.Base")
 
 ---Class to configure and manage the screen drawing
----@class SenUICanvas : BaseClass
+---@class SenUICanvas
 ---@field elements table Elements to be drawn on the canvas
 ---@field addElement fun(self:SenUICanvas, element:SenUIElement) Adds an element to the canvas to be drawn
 ---@field draw fun(self:SenUICanvas) Draws all elements on the canvas
@@ -21,7 +21,7 @@ SenUI.Canvas = {
     ---@section new Creates a new canvas object
     ---@return Canvas canvas Canvas object
     new = function()
-        local this = SenUI.Common.BaseClass.new(SenUI.Canvas)
+        local this = SenUI.New(SenUI.Canvas)
         return this
     end,
     ---@endsection

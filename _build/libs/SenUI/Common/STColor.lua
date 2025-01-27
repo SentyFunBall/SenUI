@@ -7,7 +7,7 @@
 require("SenUI.Common.Base")
 
 ---Simple class for handling colors in a clean and easy way
----@class STColor : BaseClass
+---@class STColor
 ---@field r number Red value
 ---@field g number Green value
 ---@field b number Blue value
@@ -28,7 +28,7 @@ SenUI.Color = {
     ---@overload fun(rgba:table):STColor
     ---@return STColor color Color object
     new = function(r, g, b, a)
-        local this = SenUI.Common.BaseClass.new(SenUI.Color)
+        local this = SenUI.New(SenUI.Color)
         if type(r) == "table" then
             this.r = r[1]
             this.g = r[2]
