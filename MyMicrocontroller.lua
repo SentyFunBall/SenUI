@@ -57,7 +57,7 @@ canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 20
 
 function onTick()
     color2 = color2:convertToHSV()
-    if input.getBool(1) and color2.type == "HSV" then
+    if input.getBool(1) then
         --rainbow mode
         color2.h = (color2.h + 1) % 360
     end

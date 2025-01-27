@@ -17,8 +17,6 @@ require("SenUI.Common.Base")
 ---@field v number Value value
 ---@field type string Type of color
 SenUI.Color = {
-    __c = "STColor",
-
     ---@section new Creates a new color object as RGB
     ---@param r number Red value
     ---@param g number Green value
@@ -29,18 +27,8 @@ SenUI.Color = {
     ---@return STColor color Color object
     new = function(r, g, b, a)
         local this = SenUI.New(SenUI.Color)
-        if type(r) == "table" then
-            this.r = r[1]
-            this.g = r[2]
-            this.b = r[3]
-            this.a = r[4] or 255
-        else
-            this.r = r
-            this.g = g
-            this.b = b
-            this.a = a or 255
-        end
-        this.type = "RGB"
+        if type(r) == "table" then r, g, b, a = r[1], r[2], r[3], r[4] end
+        this.r, this.g, this.b, this.a, this.type = r, g, b, a or 255, "RGB"
         return this
     end,
     ---@endsection
@@ -55,23 +43,11 @@ SenUI.Color = {
     ---@return number number Unpacked color A
     open = function(self, mode)
         if mode == "flat" then
-            if self.type == "HSV" then
-                return self.h/360, self.s/255, self.v/255, self.a/255
-            else
-                return self.r/255, self.g/255, self.b/255, self.a/255
-            end
+            return self.type == "HSV" and {self.h/360, self.s/255, self.v/255, self.a/255} or {self.r/255, self.g/255, self.b/255, self.a/255}
         elseif mode == "table" then
-            if self.type == "HSV" then
-                return {self.h, self.s, self.v, self.a}
-            else
-                return {self.r, self.g, self.b, self.a}
-            end
+            return self.type == "HSV" and {self.h, self.s, self.v, self.a} or {self.r, self.g, self.b, self.a}
         else
-            if self.type == "HSV" then
-                return self.h, self.s, self.v, self.a
-            else
-                return self.r, self.g, self.b, self.a
-            end
+            return self.type == "HSV" and {self.h, self.s, self.v, self.a} or {self.r, self.g, self.b, self.a}
         end
     end,
     ---@endsection
@@ -80,22 +56,19 @@ SenUI.Color = {
     ---@param self STColor
     ---@return STColor color Color object
     convertToHSV = function(self)
-        if self.type == "RGB" then
-            local r, g, b, a = self:open("flat")
-            self.r,self.g,self.b = nil,nil,nil
-            local max, min, d = math.max(r, g, b), math.min(r, g, b), math.max(r, g, b) - math.min(r, g, b)
-            local h, s, v = 0, (max == 0 and 0 or d / max), max
-            if max ~= min then
-                h = (max == r and (g - b) / d + (g < b and 6 or 0)) or (max == g and (b - r) / d + 2) or (max == b and (r - g) / d + 4)
-                h = h / 6
-            end
-            self.h = h * 360
-            self.s = s * 255
-            self.v = v * 255
-            self.a = a * 255
-            self.type = "HSV"
-            return self
+        local r, g, b, a = self:open("flat")
+        self.r,self.g,self.b = nil,nil,nil
+        local max, min, d = math.max(r, g, b), math.min(r, g, b), math.max(r, g, b) - math.min(r, g, b)
+        local h, s, v = 0, (max == 0 and 0 or d / max), max
+        if max ~= min then
+            h = (max == r and (g - b) / d + (g < b and 6 or 0)) or (max == g and (b - r) / d + 2) or (max == b and (r - g) / d + 4)
+            h = h / 6
         end
+        self.h = h * 360
+        self.s = s * 255
+        self.v = v * 255
+        self.a = a * 255
+        self.type = "HSV"
         return self
     end,
     ---@endsection
@@ -104,48 +77,20 @@ SenUI.Color = {
     ---@param self STColor
     ---@return STColor color Color object
     convertToRGB = function(self)
-        if self.type == "HSV" then
-            local h, s, v, a = self:open("flat")
-            self.h,self.s,self.v = nil,nil,nil
-            local f = h * 6 - math.floor(h * 6)
-            local i, p, q, t = math.floor(h * 6), v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
-            local r, g, b = (i == 0 and v or i == 1 and q or i == 2 and p or i == 3 and p or i == 4 and t or v), (i == 0 and t or i == 1 and v or i == 2 and v or i == 3 and q or i == 4 and p or p), (i == 0 and p or i == 1 and p or i == 2 and t or i == 3 and v or i == 4 and v or q)
-            self.r = r * 255
-            self.g = g * 255
-            self.b = b * 255
-            self.a = a * 255
-            self.type = "RGB"
-            return self
-        end
+        local h, s, v, a = self:open("flat")
+        self.h,self.s,self.v = nil,nil,nil
+        local f = h * 6 - math.floor(h * 6)
+        local i, p, q, t = math.floor(h * 6), v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
+        local r, g, b = (i == 0 and v or i == 1 and q or i == 2 and p or i == 3 and p or i == 4 and t or v), (i == 0 and t or i == 1 and v or i == 2 and v or i == 3 and q or i == 4 and p or p), (i == 0 and p or i == 1 and p or i == 2 and t or i == 3 and v or i == 4 and v or q)
+        self.r = r * 255
+        self.g = g * 255
+        self.b = b * 255
+        self.a = a * 255
+        self.type = "RGB"
         return self
     end,
-
-    ---@section RGBtoHSV Converts RGB table to HSV table
-    ---@param rgbTable table RGB table
-    ---@return table hsvTable HSV table
-    RGBtoHSV = function(rgbTable)
-        local r, g, b = table.unpack(rgbTable)
-        local max, min, d = math.max(r, g, b), math.min(r, g, b), math.max(r, g, b) - math.min(r, g, b)
-        local h, s, v = 0, (max == 0 and 0 or d / max), max
-        if max ~= min then
-            h = (max == r and (g - b) / d + (g < b and 6 or 0)) or (max == g and (b - r) / d + 2) or (max == b and (r - g) / d + 4)
-            h = h / 6
-        end
-        return {h * 360, s * 255, v * 255}
-    end,
     ---@endsection
 
-    ---@section HSVtoRGB Converts HSV table to RGB table
-    ---@param hsvTable table HSV table
-    ---@return table rgbTable RGB table
-    HSVtoRGB = function(hsvTable)
-        local h, s, v = table.unpack(hsvTable)
-        local i, f, p, q, t = math.floor(h * 6), h * 6 - math.floor(h * 6), v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
-        local r, g, b = (i == 0 and v or i == 1 and q or i == 2 and p or i == 3 and p or i == 4 and t or v), (i == 0 and t or i == 1 and v or i == 2 and v or i == 3 and q or i == 4 and p or p), (i == 0 and p or i == 1 and p or i == 2 and t or i == 3 and v or i == 4 and v or q)
-        return {r * 255, g * 255, b * 255}
-    end,
-    ---@endsection
-    
     ---@section gammaCorrect Gamma corrects the color for Stormworks terrible gamma
     ---@param self STColor
     ---@return STColor color Color object

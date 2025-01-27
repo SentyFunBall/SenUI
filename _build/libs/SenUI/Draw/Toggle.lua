@@ -14,8 +14,6 @@ require("SenUI.Common.DrawBase")
 ---@field backgroundColor STColor Background color of the toggle
 ---@field textColor STColor Text color of the toggle
 SenUI.Toggle = {
-    __c = "SenUIToggle",
-
     ---@section new Creates a new color object as RGB
     ---@param state boolean Default state of the toggle
     ---@param text string Text to display on the toggle

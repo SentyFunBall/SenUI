@@ -5,11 +5,7 @@
 --Code by STCorp. Do not reuse.--
 
 SenUI.New = function(class)
-    --copy both the provided class and baseclass into this and return this
-    local this = {}
-    this = SenUI.Copy(class, this)
-    this.__c = class.__c
-    return this
+    return SenUI.Copy(class, {})
 end
 
 SenUI.Copy = function(from, to, overwrite)

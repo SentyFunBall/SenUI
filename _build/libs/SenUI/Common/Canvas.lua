@@ -13,7 +13,6 @@ require("SenUI.Common.Base")
 ---@field draw fun(self:SenUICanvas) Draws all elements on the canvas
 ---@field processTick fun(self:SenUICanvas) Processes all element touch events, calling any functions and outputting any values
 SenUI.Canvas = {
-    __c = "Canvas",
     elements = {},
     scrollable = 0,
     scrollPixels = 0,
