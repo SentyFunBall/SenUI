@@ -26,6 +26,7 @@ SenUI.Toggle = {
         this.text = text
         this.backgroundColor = backgroundColor
         this.textColor = textColor
+        this.type = 1
         return this
     end,
     ---@endsection
@@ -58,6 +59,13 @@ SenUI.Toggle = {
 
         SenUI.Common.DrawBase.setColor(self.textColor)
         screen.drawText(x + 2, y - 1, self.text)
+    end,
+    ---@endsection
+
+    ---@section toggle Toggles the state of the element
+    ---@param self SenUIToggle
+    toggle = function(self)
+        self.state = not self.state
     end,
     ---@endsection
 }

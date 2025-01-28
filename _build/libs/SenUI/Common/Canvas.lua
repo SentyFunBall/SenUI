@@ -5,22 +5,23 @@
 --Code by STCorp. Do not reuse.--
 
 require("SenUI.Common.Base")
-
 ---Class to configure and manage the screen drawing
 ---@class SenUICanvas
----@field elements table Elements to be drawn on the canvas
 ---@field addElement fun(self:SenUICanvas, element:SenUIElement) Adds an element to the canvas to be drawn
 ---@field draw fun(self:SenUICanvas) Draws all elements on the canvas
 ---@field processTick fun(self:SenUICanvas) Processes all element touch events, calling any functions and outputting any values
 SenUI.Canvas = {
-    elements = {},
-    scrollable = 0,
-    scrollPixels = 0,
-
     ---@section new Creates a new canvas object
     ---@return Canvas canvas Canvas object
-    new = function()
+    ---@param x? number X position of the canvas
+    ---@param y? number Y position of the canvas
+    new = function(x, y)
         local this = SenUI.New(SenUI.Canvas)
+        this.elements = {}
+        this.scrollable = 0
+        this.scrollPixels = 0
+        this.x = x or 0
+        this.y = y or 0
         return this
     end,
     ---@endsection
@@ -28,15 +29,24 @@ SenUI.Canvas = {
     ---@section processTick Processes all element touch events, calling any functions and outputting any values
     ---@param self Canvas
     processTick = function(self)
-        
+
     end,
     ---@endsection
-    
+
     ---@section draw Draws all elements on the canvas
     ---@param self Canvas
     draw = function(self)
+        --add vertical offset based off each element's type
+        local total = 0
+        local heightOffsets = {}
         for _, element in ipairs(self.elements) do
-            element:draw(15, 40)
+            if element.type == 1 then -- SenUIToggle
+                total = total + 11
+            end
+            heightOffsets[_] = total
+        end
+        for _, element in ipairs(self.elements) do
+            element:draw(self.x, heightOffsets + self.y)
         end
     end,
     ---@endsection
@@ -46,6 +56,6 @@ SenUI.Canvas = {
     ---@param element SenUIElement Element to be added
     addElement = function(self, element)
         table.insert(self.elements, element)
-    end
+    end,
     ---@endsection
 }

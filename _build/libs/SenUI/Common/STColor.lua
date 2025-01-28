@@ -43,11 +43,11 @@ SenUI.Color = {
     ---@return number number Unpacked color A
     open = function(self, mode)
         if mode == "flat" then
-            return self.type == "HSV" and {self.h/360, self.s/255, self.v/255, self.a/255} or {self.r/255, self.g/255, self.b/255, self.a/255}
+            return self.type == "HSV" and self.h/360, self.s/255, self.v/255, self.a/255 or self.r/255, self.g/255, self.b/255, self.a/255
         elseif mode == "table" then
             return self.type == "HSV" and {self.h, self.s, self.v, self.a} or {self.r, self.g, self.b, self.a}
         else
-            return self.type == "HSV" and {self.h, self.s, self.v, self.a} or {self.r, self.g, self.b, self.a}
+            return self.type == "HSV" and self.h, self.s, self.v, self.a or self.r, self.g, self.b, self.a
         end
     end,
     ---@endsection

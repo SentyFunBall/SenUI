@@ -52,8 +52,9 @@ color2 = SenUI.Copy(color, {})
 
 tick = 0
 
-canvas = SenUI.Canvas.new()
+canvas = SenUI.Canvas.new(5, 40)
 canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
+-- now that i think about it, if you initialize like this there's no way to access the element later, so ideally you'd store it in a variable instead
 
 function onTick()
     color2 = color2:convertToHSV()
