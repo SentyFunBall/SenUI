@@ -29,8 +29,19 @@ SenUI.Canvas = {
 
     ---@section processTick Processes all element touch events, calling any functions and outputting any values
     ---@param self Canvas
-    processTick = function(self)
-
+    ---@param touchX number X position of the touch from screen composite input
+    ---@param touchY number Y position of the touch from screen composite input
+    processTick = function(self, touchX, touchY)
+        local function isPointInRectangle(rx, ry, rw, rh)
+            return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + rh
+        end
+        for _, element in ipairs(self.elements) do
+            if element.type == 1 then -- SenUIToggle
+                if isPointInRectangle(self.x, self.y, #element.text * 5 + 15, 10) then
+                    element:toggle()
+                end
+            end
+        end
     end,
     ---@endsection
 
@@ -67,15 +78,6 @@ SenUI.Canvas = {
     ---@param id number ID of the element to remove
     removeElement = function(self, id)
         self.elements[id] = nil --removing like this instead of table.remove to prevent ID shifting
-    end,
-    ---@endsection
-    
-    ---@section getElement Gets an element from the canvas
-    ---@param self Canvas
-    ---@param id number ID of the element to get
-    ---@return SenUIElement element The element
-    getElement = function(self, id)
-        return self.elements[id]
     end,
     ---@endsection
 }

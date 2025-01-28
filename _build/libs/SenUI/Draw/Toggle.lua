@@ -64,10 +64,8 @@ SenUI.Toggle = {
 
     ---@section toggle Toggles the state of the element
     ---@param self SenUIToggle
-    ---@return boolean state New state of the toggle
     toggle = function(self)
         self.state = not self.state
-        return self.state
     end,
     ---@endsection
 }

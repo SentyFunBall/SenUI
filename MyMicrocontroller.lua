@@ -50,29 +50,61 @@ require("SenUI")
 color = SenUI.Color.new(255, 0, 0)
 color2 = SenUI.Copy(color, {})
 
-tick = 0
-
 canvas = SenUI.Canvas.new(5, 40)
-canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
--- now that i think about it, if you initialize like this there's no way to access the element later, so ideally you'd store it in a variable instead
+
+--be sure to keep track of the elements. SenUI does, you should as well.
+toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
 function onTick()
-    color2 = color2:convertToHSV()
-    if input.getBool(1) then
+    press = input.getBool(1)
+    touchX = input.getNumber(1)
+    touchY = input.getNumber(2)
+    
+    if press then --Always run the processTick only during a touch.
+        canvas:processTick(touchX, touchY)
+    end
+
+    -- Externally toggle an element
+    externalToggle = input.getBool(2) --Assume pulse input
+    if externalToggle then
+        canvas.elements[toggleId]:toggle()
+        --[[
+        
+        You can also do it with more verbose structure:
+        element = canvas.elements[toggleId]
+        element:toggle()
+
+        Or by accessing directly:
+        element = canvas.elements[toggleId]
+        element.state = not element.state
+
+        ]]
+    end
+ 
+
+    --Playing with colors
+    color2 = color2:convertToHSV() --If you have issues with these functions, it's probably because the STColor is already in the form you're converting to
+    if press then
         --rainbow mode
         color2.h = (color2.h + 1) % 360
     end
 end
 
 function onDraw()
+    --Just drawing some debug stuff
     screen.setColor(255,255,255)
     screen.drawText(0,0,"R:"..color.r)
     screen.drawText(0,14,"MODE:"..color.type)
     screen.drawText(30,0,"H:"..color2.h)
     screen.setColor(color:open())
     screen.drawRectF(20,20,10,10)
-    screen.setColor(color2:convertToRGB():open())
+    screen.setColor(color2:convertToRGB():open()) --Combo functions my beloved
     screen.drawRectF(40,20,10,10)
 
     canvas:draw()
+
+    --Demonstration on how to have regular screen drawing interact with SenUI
+    textHeight = 30
+    scroll = canvas.scrollPixels
+    screen.drawText(0, textHeight - scroll, "Ha!")
 end
