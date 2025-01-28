@@ -15,6 +15,7 @@ SenUI.Canvas = {
     ---@return Canvas canvas Canvas object
     ---@param x? number X position of the canvas
     ---@param y? number Y position of the canvas
+    ---@return SenUICanvas canvas Canvas object
     new = function(x, y)
         local this = SenUI.New(SenUI.Canvas)
         this.elements = {}
@@ -54,8 +55,27 @@ SenUI.Canvas = {
     ---@section addElement Adds an element to the canvas to be drawn
     ---@param self Canvas
     ---@param element SenUIElement Element to be added
+    ---@return number ID The ID of the element
     addElement = function(self, element)
         table.insert(self.elements, element)
+        return #self.elements
+    end,
+    ---@endsection
+
+    ---@section removeElement Removes an element from the canvas
+    ---@param self Canvas
+    ---@param id number ID of the element to remove
+    removeElement = function(self, id)
+        self.elements[id] = nil --removing like this instead of table.remove to prevent ID shifting
+    end,
+    ---@endsection
+    
+    ---@section getElement Gets an element from the canvas
+    ---@param self Canvas
+    ---@param id number ID of the element to get
+    ---@return SenUIElement element The element
+    getElement = function(self, id)
+        return self.elements[id]
     end,
     ---@endsection
 }

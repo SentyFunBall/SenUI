@@ -19,7 +19,7 @@ SenUI.Toggle = {
     ---@param text string Text to display on the toggle
     ---@param backgroundColor STColor Background color of the toggle
     ---@param textColor STColor Text color of the toggle
-    ---@returns SenUIToggle toggle Toggle element
+    ---@return SenUIToggle toggle Toggle element
     new = function(state, text, backgroundColor, textColor)
         local this = SenUI.New(SenUI.Toggle)
         this.state = state
@@ -64,8 +64,10 @@ SenUI.Toggle = {
 
     ---@section toggle Toggles the state of the element
     ---@param self SenUIToggle
+    ---@return boolean state New state of the toggle
     toggle = function(self)
         self.state = not self.state
+        return self.state
     end,
     ---@endsection
 }
