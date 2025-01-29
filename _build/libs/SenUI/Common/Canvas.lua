@@ -37,7 +37,8 @@ SenUI.Canvas = {
         end
         for _, element in ipairs(self.elements) do
             if element.type == 1 then -- SenUIToggle
-                if isPointInRectangle(self.x, self.y, #element.text * 5 + 15, 10) then
+                if isPointInRectangle(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels, #element.text * 5 + 15, 8) then
+                    print ("we chill")
                     element:toggle()
                 end
             end
@@ -49,16 +50,8 @@ SenUI.Canvas = {
     ---@param self Canvas
     draw = function(self)
         --add vertical offset based off each element's type
-        local total = 0
-        local heightOffsets = {}
         for _, element in ipairs(self.elements) do
-            if element.type == 1 then -- SenUIToggle
-                total = total + 11
-            end
-            heightOffsets[_] = total
-        end
-        for _, element in ipairs(self.elements) do
-            element:draw(self.x, heightOffsets + self.y)
+            element:draw(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels)
         end
     end,
     ---@endsection
@@ -69,6 +62,16 @@ SenUI.Canvas = {
     ---@return number ID The ID of the element
     addElement = function(self, element)
         table.insert(self.elements, element)
+
+        local total = 0
+        self.heightOffsets = {}
+        for i = 2, #self.elements do
+            if self.elements[i].type == 1 then -- SenUIToggle
+                total = total + 11
+            end
+            self.heightOffsets[i] = total
+        end
+
         return #self.elements
     end,
     ---@endsection

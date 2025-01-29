@@ -50,15 +50,17 @@ require("SenUI")
 color = SenUI.Color.new(255, 0, 0)
 color2 = SenUI.Copy(color, {})
 
-canvas = SenUI.Canvas.new(5, 40)
+canvas = SenUI.Canvas.new(5, 45)
 
 --be sure to keep track of the elements. SenUI does, you should as well.
 toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
+canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
 function onTick()
-    press = input.getBool(1)
-    touchX = input.getNumber(1)
-    touchY = input.getNumber(2)
+    press = input.getBool(1) and not down
+    down = input.getBool(1)
+    touchX = input.getNumber(3)
+    touchY = input.getNumber(4)
     
     if press then --Always run the processTick only during a touch.
         canvas:processTick(touchX, touchY)
