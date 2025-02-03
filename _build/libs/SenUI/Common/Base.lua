@@ -17,15 +17,15 @@ SenUI.Copy = function(from, to, overwrite)
 end
 
 ---@section lerp Linearly interpolates between two colors
----@param self STColor
----@param color STColor Color to interpolate to
+---@param start STColor
+---@param endColor STColor Color to interpolate to
 ---@param t number Interpolation value
 ---@return STColor color Interpolated color
-SenUI.ColLerp = function(self, color, t)
-    local r = self.r + (color.r - self.r) * t
-    local g = self.g + (color.g - self.g) * t
-    local b = self.b + (color.b - self.b) * t
-    local a = self.a + (color.a - self.a) * t
+SenUI.ColLerp = function(start, endColor, t)
+    local r = start.r + (endColor.r - start.r) * t
+    local g = start.g + (endColor.g - start.g) * t
+    local b = start.b + (endColor.b - start.b) * t
+    local a = start.a + (endColor.a - start.a) * t
     return SenUI.Color.new(r, g, b, a)
 end
 ---@endsection

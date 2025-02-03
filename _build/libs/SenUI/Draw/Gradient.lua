@@ -20,7 +20,7 @@ SenUI.Gradient = {
     ---@param endColor STColor End color of the gradient
     ---@return SenUIGradient gradient Gradient element
     new = function(x, y, w, h, segments, startColor, endColor)
-        local this = SenUI.New(SenUI.Toggle)
+        local this = SenUI.New(SenUI.Gradient)
         this.x = x
         this.y = y
         this.w = w
@@ -28,7 +28,7 @@ SenUI.Gradient = {
         this.segments = segments
         this.startColor = startColor
         this.endColor = endColor
-        this.type = 2
+        this.type = 0
         return this
     end,
     ---@endsection
@@ -38,7 +38,7 @@ SenUI.Gradient = {
     draw = function(self)
         local segmentWidth = self.w / self.segments
         for i = 0, self.segments do
-            local color = self.startColor:lerp(self.endColor, i / self.segments)
+            local color = SenUI.ColLerp(self.startColor, self.endColor, i / self.segments)
             SenUI.Common.DrawBase.setColor(color)
             screen.drawRectF(self.x + i * segmentWidth, self.y, segmentWidth, self.h)
         end

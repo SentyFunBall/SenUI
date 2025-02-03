@@ -37,8 +37,7 @@ SenUI.Canvas = {
         end
         for _, element in ipairs(self.elements) do
             if element.type == 1 then -- SenUIToggle
-                if isPointInRectangle(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels, #element.text * 5 + 15, 8) then
-                    print ("we chill")
+                if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1, #element.text * 5 + 15, 8) then
                     element:toggle()
                 end
             end
@@ -49,9 +48,13 @@ SenUI.Canvas = {
     ---@section draw Draws all elements on the canvas
     ---@param self Canvas
     draw = function(self)
-        --add vertical offset based off each element's type
+        --draw elements, taking both scroll and heightOffsets into account
         for _, element in ipairs(self.elements) do
-            element:draw(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels)
+            if element.type == 0 then -- SenUIGradient
+                element:draw()
+            elseif element.type == 1 then -- SenUIToggle
+                element:draw(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels)
+            end
         end
     end,
     ---@endsection
@@ -62,14 +65,20 @@ SenUI.Canvas = {
     ---@return number ID The ID of the element
     addElement = function(self, element)
         table.insert(self.elements, element)
+        local moveableElements = {}
+        for _, element in ipairs(self.elements) do
+            if element.type > 0 then
+                table.insert(moveableElements, element)
+            end
+        end
 
         local total = 0
         self.heightOffsets = {}
-        for i = 2, #self.elements do
-            if self.elements[i].type == 1 then -- SenUIToggle
+        for _, element in ipairs(moveableElements) do
+            if element.type == 1 then -- SenUIToggle
                 total = total + 11
             end
-            self.heightOffsets[i] = total
+            self.heightOffsets[_] = total
         end
 
         return #self.elements

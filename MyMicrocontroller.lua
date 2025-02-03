@@ -50,9 +50,10 @@ require("SenUI")
 color = SenUI.Color.new(255, 0, 0)
 color2 = SenUI.Copy(color, {})
 
-canvas = SenUI.Canvas.new(5, 45)
+canvas = SenUI.Canvas.new(5, 40)
 
 --be sure to keep track of the elements. SenUI does, you should as well.
+canvas:addElement(SenUI.Gradient.new(0, 0, 64, 64, 32, SenUI.Color.new(47, 51, 78), SenUI.Color.new(128, 95, 164)))
 toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
@@ -82,7 +83,6 @@ function onTick()
 
         ]]
     end
- 
 
     --Playing with colors
     color2 = color2:convertToHSV() --If you have issues with these functions, it's probably because the STColor is already in the form you're converting to
