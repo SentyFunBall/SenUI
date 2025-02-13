@@ -53,7 +53,7 @@ color2 = SenUI.Copy(color, {})
 canvas = SenUI.Canvas.new(5, 40)
 
 --be sure to keep track of the elements. SenUI does, you should as well.
-gId = canvas:addElement(SenUI.Gradient.new(0, 0, 96, 96, 32, false, SenUI.Color.new(47, 51, 78), SenUI.Color.new(128, 95, 164)))
+canvas:addElement(SenUI.Gradient.new(0, 0, 96, 96, 32, false, SenUI.Color.new(47, 51, 78), SenUI.Color.new(128, 95, 164)))
 toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
@@ -90,10 +90,13 @@ function onDraw()
     --Just drawing some debug stuff
     screen.setColor(color:open())
     screen.drawRectF(20,20,10,10)
-    screen.setColor( color2.type > 0 and color2:open() or color2:convertToRGB():open() )
+    if color2.type > 0 then
+        screen.setColor(color2:convertToRGB():open())
+    else
+        screen.setColor(color2:open())
+    end
     screen.drawRectF(40,20,10,10)
-
-    screen.drawText(1,1, canvas.elements[gId].startColor.type)
+    screen.drawText(1, 1, color2.r)
 
     --Demonstration on how to have regular screen drawing interact with SenUI
     textHeight = 30
