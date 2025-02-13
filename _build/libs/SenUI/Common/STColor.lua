@@ -27,8 +27,12 @@ SenUI.Color = {
     ---@return STColor color Color object
     new = function(r, g, b, a)
         local this = SenUI.New(SenUI.Color)
-        if type(r) == "table" then r, g, b, a = r[1], r[2], r[3], r[4] end
-        this.r, this.g, this.b, this.a, this.type = r, g, b, a or 255, "RGB"
+        if type(r) == "table" then
+            this.r, this.g, this.b, this.a = r[1], r[2], r[3], r[4] or 255
+        else
+            this.r, this.g, this.b, this.a = r, g, b, a or 255
+        end
+        this.type = 0
         return this
     end,
     ---@endsection
@@ -43,19 +47,19 @@ SenUI.Color = {
     ---@return number number Unpacked color A
     open = function(self, mode)
         if mode == "flat" then
-            if self.type == "HSV" then
+            if self.type > 0 then
                 return self.h/360, self.s/255, self.v/255, self.a/255
             else
                 return self.r/255, self.g/255, self.b/255, self.a/255
             end
         elseif mode == "table" then
-            if self.type == "HSV" then
+            if self.type > 0 then
                 return {self.h, self.s, self.v, self.a}
             else
                 return {self.r, self.g, self.b, self.a}
             end
         else
-            if self.type == "HSV" then
+            if self.type > 0 then
                 return self.h, self.s, self.v, self.a
             else
                 return self.r, self.g, self.b, self.a
@@ -80,7 +84,7 @@ SenUI.Color = {
         self.s = s * 255
         self.v = v * 255
         self.a = a * 255
-        self.type = "HSV"
+        self.type = 1
         return self
     end,
     ---@endsection
@@ -98,7 +102,7 @@ SenUI.Color = {
         self.g = g * 255
         self.b = b * 255
         self.a = a * 255
-        self.type = "RGB"
+        self.type = 0
         return self
     end,
     ---@endsection
@@ -109,7 +113,7 @@ SenUI.Color = {
     gammaCorrect= function(self)
         local _ = {}
         _=self:open("table")
-        for i,v in pairs(_) do
+        for i in pairs(_) do
             _[i]=_[i]^2.2/255^2.2*_[i]
         end
         return SenUI.Color.new(_)

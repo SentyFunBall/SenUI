@@ -88,7 +88,7 @@ SenUI.Canvas = {
             self.heightOffsets[element.id] = total
         end
 
-        return #self.elements
+        return element.id
     end,
     ---@endsection
 

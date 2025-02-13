@@ -15,7 +15,7 @@ SenUI.Common.DrawBase = {
     ---@param correctGamma? boolean Whether to correct the gamma of the color (Default true)
     setColor = function(color, correctGamma)
         correctGamma = correctGamma or true
-        if color.type ~= "RGB" then color = color:convertToRGB() end
+        if color.type > 0 then color = color:convertToRGB() end
         if correctGamma then color = color:gammaCorrect() end
         screen.setColor(color:open())
     end,
