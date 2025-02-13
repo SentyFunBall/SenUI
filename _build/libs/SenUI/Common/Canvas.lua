@@ -78,10 +78,12 @@ SenUI.Canvas = {
         local total = 0
         self.heightOffsets = {}
         for _, element in ipairs(moveableElements) do
-            if element.type == 1 then -- SenUIToggle
-                total = total + 11
-            elseif element.type == 2 then -- SenUIDropdown
-                total = total + 11
+            if _ > 1 then
+                if element.type == 1 then -- SenUIToggle
+                    total = total + 11
+                elseif element.type == 2 then -- SenUIDropdown
+                    total = total + 11
+                end
             end
             self.heightOffsets[element.id] = total
         end
