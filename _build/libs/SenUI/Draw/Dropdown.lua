@@ -9,20 +9,29 @@ require("SenUI.Common.DrawBase")
 
 ---Dropdown class. Creates a dropdown with customizable text options to select from.
 ---@class SenUIDropdown
-
+---@field title string Title of the dropdown
+---@field options table<string> Options to display in the dropdown. List of strings
+---@field backgroundColor STColor Background color of the dropdown
+---@field textColor STColor Text color of the dropdown
+---@field selected number Selected option index. 1 by default
+---@field open boolean Whether the dropdown is open or not
+---@field type number Type of element. 2 for dropdown
 SenUI.Dropdown = {
     ---@section new Creates a new dropdown element
     ---@param name string Name of the dropdown
     ---@param options table<string> Options to display in the dropdown. List of strings
     ---@param backgroundColor STColor Background color of the dropdown
     ---@param textColor STColor Text color of the dropdown
+    ---@param selected? number Selected option index. 1 by default
     ---@return SenUIDropdown dropdown Dropdown element
-    new = function(name, options, backgroundColor, textColor)
+    new = function(name, options, backgroundColor, textColor, selected)
         local this = SenUI.New(SenUI.Dropdown)
-        this.name = name
+        this.title = name
         this.options = options
         this.backgroundColor = backgroundColor
         this.textColor = textColor
+        this.selected = selected or 1
+        this.open = false
         this.type = 2
         return this
     end,
@@ -31,8 +40,24 @@ SenUI.Dropdown = {
     ---@section draw Draws the element onto the canvas
     ---@param self SenUIDropdown
     draw = function(self, x, y)
-        SenUI.Common.DrawBase.setColor(self.backgroundColor)
-        screen.drawRectF(x, y, 10, 10)
+        --draw background rect with height dependant on open or not (and #options)
+        SenUI.DrawBase.setColor(self.backgroundColor)
+        local width = #self.title * 5 + 20
+        SenUI.DrawBase.drawRoundedRect(x, y, width, self.open and #self.options * 9 or 8)
+
+        --draw static UI
+        SenUI.DrawBase.setColor(self.textColor)
+        screen.drawText(x + 9, y + 2, self.title)
+        screen.drawText(x + 2, y + 2, self.open and "-" or "+")
+        screen.drawLine(x + 7, y, x + 7, y + 9)
+
+        --draw text
+        if self.open then
+            screen.drawLine(x, y + 8, x + width + 1, y + 8)
+            for i = 1, #self.options do
+                screen.drawText(x + 2, y + 2 + i * 8, self.options[i])
+            end
+        end
     end,
     ---@endsection
 }
