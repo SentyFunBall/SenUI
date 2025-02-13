@@ -53,8 +53,8 @@ SenUI.Canvas = {
         for _, element in ipairs(self.elements) do
             if element.type == 0 then -- SenUIGradient
                 element:draw()
-            elseif element.type == 1 then -- SenUIToggle
-                element:draw(self.x, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels)
+            else -- SenUIToggle
+                element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
             end
         end
     end,
@@ -65,7 +65,9 @@ SenUI.Canvas = {
     ---@param element SenUIElement Element to be added
     ---@return number ID The ID of the element
     addElement = function(self, element)
+        element.id = #self.elements + 1
         table.insert(self.elements, element)
+
         local moveableElements = {}
         for _, element in ipairs(self.elements) do
             if element.type > 0 then
@@ -78,8 +80,10 @@ SenUI.Canvas = {
         for _, element in ipairs(moveableElements) do
             if element.type == 1 then -- SenUIToggle
                 total = total + 11
+            elseif element.type == 2 then -- SenUIDropdown
+                total = total + 11
             end
-            self.heightOffsets[_] = total
+            self.heightOffsets[element.id] = total
         end
 
         return #self.elements

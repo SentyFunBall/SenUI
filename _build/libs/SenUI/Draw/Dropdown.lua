@@ -31,7 +31,8 @@ SenUI.Dropdown = {
     ---@section draw Draws the element onto the canvas
     ---@param self SenUIDropdown
     draw = function(self, x, y)
-        
+        SenUI.Common.DrawBase.setColor(self.backgroundColor)
+        screen.drawRectF(x, y, 10, 10)
     end,
     ---@endsection
 }
