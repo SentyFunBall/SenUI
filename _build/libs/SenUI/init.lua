@@ -4,7 +4,6 @@
 --Code by STCorp. Do not reuse.--
 
 SenUI = {}
-SenUI.Common = {}
 
 require("SenUI.Common.STColor")
 require("SenUI.Common.Canvas")

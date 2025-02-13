@@ -9,7 +9,7 @@ require("SenUI.Common.STColor")
 
 ---General drawing helper functions
 ---@class DrawBase
-SenUI.Common.DrawBase = {
+SenUI.DrawBase = {
     ---@section setColor Sets the color of the display
     ---@param color STColor Color to set the display to
     ---@param correctGamma? boolean Whether to correct the gamma of the color (Default true)
