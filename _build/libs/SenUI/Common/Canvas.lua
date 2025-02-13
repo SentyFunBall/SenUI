@@ -23,6 +23,7 @@ SenUI.Canvas = {
         this.scrollPixels = 0
         this.x = x or 0
         this.y = y or 0
+        this.heightOffsets = {}
         return this
     end,
     ---@endsection

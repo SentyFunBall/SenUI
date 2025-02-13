@@ -35,7 +35,7 @@ SenUI.Color = {
 
     ---@section unpack Unpacks the color object into a table
     ---@param self STColor
-    ---@param mode string Mode to unpack the color in
+    ---@param mode string Mode to unpack the color in: flat - returns the color in 0-1 range (returns 4 values), table - returns the color as a table
     ---@overload fun():table
     ---@return number number Unpacked color R/H
     ---@return number number Unpacked color G/S

@@ -57,6 +57,9 @@ canvas:addElement(SenUI.Gradient.new(0, 0, 64, 64, 32, SenUI.Color.new(47, 51, 7
 toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
+drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"}, SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100))
+dropId = canvas:addElement(drop)
+
 function onTick()
     press = input.getBool(1) and not down
     down = input.getBool(1)
@@ -71,17 +74,6 @@ function onTick()
     externalToggle = input.getBool(2) --Assume pulse input
     if externalToggle then
         canvas.elements[toggleId]:toggle()
-        --[[
-        
-        You can also do it with more verbose structure:
-        element = canvas.elements[toggleId]
-        element:toggle()
-
-        Or by accessing directly:
-        element = canvas.elements[toggleId]
-        element.state = not element.state
-
-        ]]
     end
 
     --Playing with colors
@@ -110,3 +102,5 @@ function onDraw()
     scroll = canvas.scrollPixels
     screen.drawText(0, textHeight - scroll, "Ha!")
 end
+
+color:open()
