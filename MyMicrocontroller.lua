@@ -104,4 +104,3 @@ function onDraw()
     screen.drawText(0, textHeight - scroll, "Ha!")
 end
 
-color:open()

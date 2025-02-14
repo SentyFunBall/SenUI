@@ -23,6 +23,7 @@ SenUI.Canvas = {
         this.scrollPixels = 0
         this.x = x or 0
         this.y = y or 0
+        this.elementOpen = false
         this.heightOffsets = {}
         return this
     end,
@@ -33,26 +34,28 @@ SenUI.Canvas = {
     ---@param touchX number X position of the touch from screen composite input
     ---@param touchY number Y position of the touch from screen composite input
     processTick = function(self, touchX, touchY)
-        local function isPointInRectangle(rx, ry, rw, rh)
-            return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + rh
+        local function isPointInRectangle(rx, ry, rw)
+            return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + 9
         end
         for _, element in ipairs(self.elements) do
-            if element.type == 1 then -- SenUIToggle
+            if element.type == 1 and not self.elementOpen then -- SenUIToggle
                 --toggle if click on element (the Y and W are hell)
-                if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1, #element.text * 5 + 15, 8) then
+                if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1, #element.text * 5 + 15) then
                     element:toggle()
                 end
             elseif element.type == 2 then -- SenUIDropdown
                 --open if click on title :thumbs_up:
                 if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1, #element.title * 5 + 20) then
                     element.open = not element.open
+                    self.elementOpen = element.open
                 end
 
-                if self.open then
+                if element.open then
                     for i = 1, #element.options do
                         if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1 + i * 8, #element.options[i] * 5 + 20) then
                             element.selected = i
                             element.open = false
+                            self.elementOpen = false
                         end
                     end
                 end
@@ -68,7 +71,13 @@ SenUI.Canvas = {
         for _, element in ipairs(self.elements) do
             if element.type == 0 then -- SenUIGradient
                 element:draw()
-            else
+            elseif element.type ~= 2 then -- SenUIToggle
+                element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
+                if self.elementOpen then
+                    SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
+                    SenUI.DrawBase.drawRoundedRect(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels, #element.text * 5 + 15, 8)
+                end
+            else -- SenUIDropdown
                 element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
             end
         end
