@@ -37,7 +37,7 @@ SenUI.DrawBase = {
     ---@endsection
 
     ---@section calculateHeightOffsets
-    ---@param elements table<SenUIGradient|SenUIDropdown|SenUIToggle> List of elements to calculate the height offsets for
+    ---@param elements table<SenUIDrawable> List of elements to calculate the height offsets for
     ---@return table<number> Height offsets of the elements
     calculateHeightOffsets = function(elements)
         local total = 0
@@ -54,5 +54,6 @@ SenUI.DrawBase = {
         end
         return heightOffsets
     end,
+    ---@endsection
 }
 ---@endsection __SENUIDRAWABLE__
