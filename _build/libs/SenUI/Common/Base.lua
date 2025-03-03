@@ -5,7 +5,7 @@
 --Code by STCorp. Do not reuse.--
 
 SenUI.New = function(class)
-    local newClass = SenUI.Copy(class, {})
+    local newClass = SenUI.Copy(class)
     newClass.new = nil
     return newClass
 end

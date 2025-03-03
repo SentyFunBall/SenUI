@@ -9,19 +9,20 @@ require("SenUI.Common.STColor")
 
 ---General drawing helper functions
 ---@class DrawBase
+---@section DrawBase 1 __DRAWBASE__
 SenUI.DrawBase = {
-    ---@section setColor Sets the color of the display
+    ---@section setColor
     ---@param color STColor Color to set the display to
     ---@param correctGamma? boolean Whether to correct the gamma of the color (Default true)
     setColor = function(color, correctGamma)
         correctGamma = correctGamma or true
-        if color.type > 0 then color = color:convertToRGB() end
+        if color.type > 0 then color = color:toRGB() end
         if correctGamma then color = color:gammaCorrect() end
         screen.setColor(color:open())
     end,
     ---@endsection
     
-    ---@section drawRoundedRect Draws a rounded rectangle
+    ---@section drawRoundedRect
     ---@param x number X position of the rectangle
     ---@param y number Y position of the rectangle
     ---@param w number Width of the rectangle
@@ -34,4 +35,24 @@ SenUI.DrawBase = {
         screen.drawLine(x + w, y + 2, x + w, y + h - 1) --right
     end,
     ---@endsection
+    
+    ---@section calculateHeightOffsets
+    ---@param elements table<SenUIGradient|SenUIDropdown|SenUIToggle> List of elements to calculate the height offsets for
+    ---@return table<number> Height offsets of the elements
+    calculateHeightOffsets = function(elements)
+        local total = 0
+        local heightOffsets = {}
+        for _, element in ipairs(elements) do
+            if _ > 1 then
+                if element.type == 1 then -- SenUIToggle
+                    total = total + 11
+                elseif element.type == 2 then -- SenUIDropdown
+                    total = total + 11
+                end
+            end
+            heightOffsets[element.id] = total
+        end
+        return heightOffsets
+    end,
 }
+---@endsection __DRAWBASE__
