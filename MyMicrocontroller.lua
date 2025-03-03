@@ -48,7 +48,7 @@ end
 require("SenUI")
 
 color = SenUI.Color.new(255, 0, 0)
-color2 = SenUI.Copy(color, {})
+color2 = SenUI.Copy(color)
 
 canvas = SenUI.Canvas.new(5, 40)
 
@@ -59,6 +59,8 @@ canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 2
 
 drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"}, SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100))
 dropId = canvas:addElement(drop)
+
+canvas:addElement(SenUI.Toggle.new(false, "Toggle3", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
 
 function onTick()
     press = input.getBool(1) and not down
