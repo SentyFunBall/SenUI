@@ -8,7 +8,7 @@ require("SenUI.Common.Base")
 require("SenUI.Common.DrawBase")
 
 ---Dropdown class. Creates a dropdown with customizable text options to select from.
----@class SenUIDropdown
+---@class SenUIDropdown: SenUIDrawable
 ---@field title string Title of the dropdown
 ---@field options table<string> Options to display in the dropdown. List of strings
 ---@field backgroundColor STColor Background color of the dropdown

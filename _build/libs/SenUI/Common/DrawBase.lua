@@ -8,8 +8,8 @@ require("SenUI.Common.Base")
 require("SenUI.Common.STColor")
 
 ---General drawing helper functions
----@class DrawBase
----@section DrawBase 1 __DRAWBASE__
+---@class SenUIDrawable
+---@section DrawBase 1 __SENUIDRAWABLE__
 SenUI.DrawBase = {
     ---@section setColor
     ---@param color STColor Color to set the display to
@@ -21,7 +21,7 @@ SenUI.DrawBase = {
         screen.setColor(color:open())
     end,
     ---@endsection
-    
+
     ---@section drawRoundedRect
     ---@param x number X position of the rectangle
     ---@param y number Y position of the rectangle
@@ -35,7 +35,7 @@ SenUI.DrawBase = {
         screen.drawLine(x + w, y + 2, x + w, y + h - 1) --right
     end,
     ---@endsection
-    
+
     ---@section calculateHeightOffsets
     ---@param elements table<SenUIGradient|SenUIDropdown|SenUIToggle> List of elements to calculate the height offsets for
     ---@return table<number> Height offsets of the elements
@@ -55,4 +55,4 @@ SenUI.DrawBase = {
         return heightOffsets
     end,
 }
----@endsection __DRAWBASE__
+---@endsection __SENUIDRAWABLE__

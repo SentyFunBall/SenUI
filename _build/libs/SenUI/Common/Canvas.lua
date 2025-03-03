@@ -112,7 +112,7 @@ SenUI.Canvas = {
 
     ---@section addElement
     ---@param self SenUICanvas
-    ---@param element SenUIGradient|SenUIDropdown|SenUIToggle to be added
+    ---@param element SenUIDrawable to be added
     ---@return number ID The ID of the element
     addElement = function(self, element)
         element.id = #self.elements + 1

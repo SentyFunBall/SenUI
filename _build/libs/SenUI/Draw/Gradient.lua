@@ -8,7 +8,7 @@ require("SenUI.Common.Base")
 require("SenUI.Common.DrawBase")
 
 ---Gradient class. Creates 1D gradients on the screen
----@class SenUIGradient
+---@class SenUIGradient: SenUIDrawable
 ---@field x number X position of the gradient (Ignores automatic element placement)
 ---@field y number Y position of the gradient (Ignores automatic element placement)
 ---@field w number Width of the gradient
