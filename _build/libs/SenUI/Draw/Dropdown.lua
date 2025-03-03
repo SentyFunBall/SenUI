@@ -14,8 +14,9 @@ require("SenUI.Common.DrawBase")
 ---@field backgroundColor STColor Background color of the dropdown
 ---@field textColor STColor Text color of the dropdown
 ---@field selected number Selected option index. 1 by default
----@field open boolean Whether the dropdown is open or not
----@field type number Type of element. 2 for dropdown
+---@field open boolean If the dropdown is open or not
+---@field type number Type of the element. (Internal use only)
+---@field id number ID of the element. (Internal use only)
 ---@section Dropdown 1 __SENUIDROPDOWN__
 SenUI.Dropdown = {
     ---@section new

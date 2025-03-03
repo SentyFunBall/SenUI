@@ -7,15 +7,12 @@
 ---Class to configure and manage the screen drawing
 require("SenUI.Common.Base")
 ---@class SenUICanvas
----@field addElement fun(self:SenUICanvas, element:SenUIElement) Adds an element to the canvas to be drawn
----@field draw fun(self:SenUICanvas) Draws all elements on the canvas
----@field processTick fun(self:SenUICanvas) Processes all element touch events, calling any functions and outputting any values
----@field elements table<SenUIElement> List of elements to be drawn
----@field scrollPixels number Scroll position of the canvas in pixels
+---@field elements table<SenUIGradient|SenUIDropdown|SenUIToggle> List of elements in the canvas
+---@field scrollPixels number Pixels scrolled
 ---@field x number X position of the canvas
 ---@field y number Y position of the canvas
----@field elementOpen boolean Whether an element is open or not
----@field heightOffsets table<number> List of height offsets for each element
+---@field elementOpen boolean If any dropdown element is being used (Internal use only)
+---@field heightOffsets table<number> Height offsets of the elements (Internal use only)
 ---@section Canvas 1 __SENUICANVAS__
 SenUI.Canvas = {
     ---@section new
@@ -25,7 +22,6 @@ SenUI.Canvas = {
     new = function(x, y)
         local this = SenUI.New(SenUI.Canvas)
         this.elements = {}
-        this.scrollable = 0
         this.scrollPixels = 0
         this.x = x or 0
         this.y = y or 0
@@ -37,8 +33,8 @@ SenUI.Canvas = {
 
     ---@section processTick
     ---@param self SenUICanvas
-    ---@param touchX number X position of the touch from screen composite input
-    ---@param touchY number Y position of the touch from screen composite input
+    ---@param touchX number X position of the touch
+    ---@param touchY number Y position of the touch
     processTick = function(self, touchX, touchY)
         local function isPointInRectangle(rx, ry, rw)
             return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + 9
@@ -74,7 +70,7 @@ SenUI.Canvas = {
     ---@param self SenUICanvas
     draw = function(self)
         --draw elements, taking both scroll and heightOffsets into account
-        for _, element in ipairs(self.elements) do
+        for _, element in pairs(self.elements) do
             if element.type == 0 then -- SenUIGradient
                 element:draw()
             elseif element.type ~= 2 then -- SenUIToggle
@@ -92,14 +88,14 @@ SenUI.Canvas = {
 
     ---@section addElement
     ---@param self SenUICanvas
-    ---@param element Element to be added
+    ---@param element SenUIGradient|SenUIDropdown|SenUIToggle to be added
     ---@return number ID The ID of the element
     addElement = function(self, element)
         element.id = #self.elements + 1
         table.insert(self.elements, element)
 
         local moveableElements = {}
-        for _, element in ipairs(self.elements) do
+        for _, element in pairs(self.elements) do
             if element.type > 0 then
                 table.insert(moveableElements, element)
             end

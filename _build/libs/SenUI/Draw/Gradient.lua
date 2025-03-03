@@ -9,6 +9,16 @@ require("SenUI.Common.DrawBase")
 
 ---Gradient class. Creates 1D gradients on the screen
 ---@class SenUIGradient
+---@field x number X position of the gradient (Ignores automatic element placement)
+---@field y number Y position of the gradient (Ignores automatic element placement)
+---@field w number Width of the gradient
+---@field h number Height of the gradient
+---@field segments number Number of segments in the gradient
+---@field direction boolean Direction of the gradient (false = horizontal, true = vertical)
+---@field startColor STColor Start color of the gradient
+---@field endColor STColor End color of the gradient
+---@field type number Type of the element. (Internal use only)
+---@field id number ID of the element. (Internal use only)
 ---@section Gradient 1 __SENUIGRADIENT__
 SenUI.Gradient = {
     ---@section new Creates an instance of a gradient
@@ -32,6 +42,7 @@ SenUI.Gradient = {
         this.startColor = startColor
         this.endColor = endColor
         this.type = 0
+        this.id = -1
         return this
     end,
     ---@endsection

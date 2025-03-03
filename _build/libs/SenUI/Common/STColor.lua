@@ -8,14 +8,14 @@ require("SenUI.Common.Base")
 
 ---Simple class for handling colors in a clean and easy way
 ---@class STColor
----@field r number Red value
----@field g number Green value
----@field b number Blue value
+---@field r number Red value (If in RGB mode)
+---@field g number Green value (If in RGB mode)
+---@field b number Blue value (If in RGB mode)
 ---@field a number Alpha value
----@field h number Hue value
----@field s number Saturation value
----@field v number Value value
----@field type number Type of color
+---@field h number Hue value (If in HSV mode)
+---@field s number Saturation value (If in HSV mode)
+---@field v number Value value (If in HSV mode)
+---@field type number Type of the color. 0 - RGB, 1 - HSV
 ---@section Color 1 __STCOLOR__
 SenUI.Color = {
     ---@section new
