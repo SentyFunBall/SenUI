@@ -72,6 +72,15 @@ SenUI.Canvas = {
                         end
                     end
                 end
+            elseif element.type == 3 and not self.inUse and self.cooldown == 0 then -- SenUIButton
+                --click if click on element
+                if isPointInRectangle(self.x-1, self.y + (self.heightOffsets[_] and self.heightOffsets[_] or 0) - self.scrollPixels-1, #element.text * 5 + 15) then
+                    element.clicked = element.clicked and not element.pressed
+                    element.pressed = not true
+                    self.cooldown = 1
+                else
+                    element.pressed = false
+                end
             end
         end
     end,
@@ -97,13 +106,15 @@ SenUI.Canvas = {
         for _, element in pairs(drawable) do
             if element.type == 0 then -- SenUIGradient
                 element:draw()
-            elseif element.type ~= 2 then -- SenUIToggle
+            elseif element.type == 1 then -- SenUIToggle
                 element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
                 if self.inUse then
                     SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
                     SenUI.DrawBase.drawRoundedRect(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels, #element.text * 5 + 15, 8)
                 end
-            else -- SenUIDropdown
+            elseif element.type == 2 then -- SenUIDropdown
+                element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
+            elseif element.type == 3 then -- SenUIButton
                 element:draw(self.x, self.y + (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0) - self.scrollPixels)
             end
         end

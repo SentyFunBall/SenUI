@@ -61,6 +61,8 @@ drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"}, SenUI.C
 dropId = canvas:addElement(drop)
 
 canvas:addElement(SenUI.Toggle.new(false, "Toggle3", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
+btn = SenUI.Button.new("Button", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100))
+btnId = canvas:addElement(btn)
 
 function onTick()
     press = input.getBool(1) and not down
