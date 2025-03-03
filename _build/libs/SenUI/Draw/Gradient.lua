@@ -9,7 +9,7 @@ require("SenUI.Common.DrawBase")
 
 ---Gradient class. Creates 1D gradients on the screen
 ---@class SenUIGradient
-
+---@section Gradient 1 __SENUIGRADIENT__
 SenUI.Gradient = {
     ---@section new Creates an instance of a gradient
     ---@param x number X position of the gradient (Ignores automatic element placement)
@@ -36,7 +36,7 @@ SenUI.Gradient = {
     end,
     ---@endsection
 
-    ---@section draw Draws the element onto the canvas
+    ---@section draw
     ---@param self SenUIGradient
     draw = function(self)
         local segmentWidth = self.direction and self.h / self.segments or self.w / self.segments
@@ -53,3 +53,4 @@ SenUI.Gradient = {
     end,
     ---@endsection
 }
+---@endsection __SENUIGRADIENT__

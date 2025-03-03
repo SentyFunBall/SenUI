@@ -13,8 +13,9 @@ require("SenUI.Common.DrawBase")
 ---@field text string Text to display on the toggle
 ---@field backgroundColor STColor Background color of the toggle
 ---@field textColor STColor Text color of the toggle
+---@section Toggle 1 __SENUITOGGLE__
 SenUI.Toggle = {
-    ---@section new Creates a new color object as RGB
+    ---@section new
     ---@param state boolean Default state of the toggle
     ---@param text string Text to display on the toggle
     ---@param backgroundColor STColor Background color of the toggle
@@ -31,7 +32,7 @@ SenUI.Toggle = {
     end,
     ---@endsection
 
-    ---@section draw Draws the element onto the canvas
+    ---@section draw
     ---@param x number X position of the element
     ---@param y number Y position of the element
     ---@param self SenUIToggle
@@ -62,10 +63,11 @@ SenUI.Toggle = {
     end,
     ---@endsection
 
-    ---@section toggle Toggles the state of the element
+    ---@section toggle
     ---@param self SenUIToggle
     toggle = function(self)
         self.state = not self.state
     end,
     ---@endsection
 }
+---@endsection __SENUITOGGLE__

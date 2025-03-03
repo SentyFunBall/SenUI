@@ -4,15 +4,21 @@
 
 --Code by STCorp. Do not reuse.--
 
-require("SenUI.Common.Base")
 ---Class to configure and manage the screen drawing
+require("SenUI.Common.Base")
 ---@class SenUICanvas
 ---@field addElement fun(self:SenUICanvas, element:SenUIElement) Adds an element to the canvas to be drawn
 ---@field draw fun(self:SenUICanvas) Draws all elements on the canvas
 ---@field processTick fun(self:SenUICanvas) Processes all element touch events, calling any functions and outputting any values
+---@field elements table<SenUIElement> List of elements to be drawn
+---@field scrollPixels number Scroll position of the canvas in pixels
+---@field x number X position of the canvas
+---@field y number Y position of the canvas
+---@field elementOpen boolean Whether an element is open or not
+---@field heightOffsets table<number> List of height offsets for each element
+---@section Canvas 1 __SENUICANVAS__
 SenUI.Canvas = {
-    ---@section new Creates a new canvas object
-    ---@return Canvas canvas Canvas object
+    ---@section new
     ---@param x? number X position of the canvas
     ---@param y? number Y position of the canvas
     ---@return SenUICanvas canvas Canvas object
@@ -29,8 +35,8 @@ SenUI.Canvas = {
     end,
     ---@endsection
 
-    ---@section processTick Processes all element touch events, calling any functions and outputting any values
-    ---@param self Canvas
+    ---@section processTick
+    ---@param self SenUICanvas
     ---@param touchX number X position of the touch from screen composite input
     ---@param touchY number Y position of the touch from screen composite input
     processTick = function(self, touchX, touchY)
@@ -64,8 +70,8 @@ SenUI.Canvas = {
     end,
     ---@endsection
 
-    ---@section draw Draws all elements on the canvas
-    ---@param self Canvas
+    ---@section draw
+    ---@param self SenUICanvas
     draw = function(self)
         --draw elements, taking both scroll and heightOffsets into account
         for _, element in ipairs(self.elements) do
@@ -84,9 +90,9 @@ SenUI.Canvas = {
     end,
     ---@endsection
 
-    ---@section addElement Adds an element to the canvas to be drawn
-    ---@param self Canvas
-    ---@param element SenUIElement Element to be added
+    ---@section addElement
+    ---@param self SenUICanvas
+    ---@param element Element to be added
     ---@return number ID The ID of the element
     addElement = function(self, element)
         element.id = #self.elements + 1
@@ -116,11 +122,12 @@ SenUI.Canvas = {
     end,
     ---@endsection
 
-    ---@section removeElement Removes an element from the canvas
-    ---@param self Canvas
+    ---@section removeElement
+    ---@param self SenUICanvas
     ---@param id number ID of the element to remove
     removeElement = function(self, id)
         self.elements[id] = nil --removing like this instead of table.remove to prevent ID shifting
     end,
     ---@endsection
 }
+---@endsection __SENUICANVAS__

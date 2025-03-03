@@ -16,8 +16,9 @@ require("SenUI.Common.DrawBase")
 ---@field selected number Selected option index. 1 by default
 ---@field open boolean Whether the dropdown is open or not
 ---@field type number Type of element. 2 for dropdown
+---@section Dropdown 1 __SENUIDROPDOWN__
 SenUI.Dropdown = {
-    ---@section new Creates a new dropdown element
+    ---@section new
     ---@param name string Name of the dropdown
     ---@param options table<string> Options to display in the dropdown. List of strings
     ---@param backgroundColor STColor Background color of the dropdown
@@ -37,7 +38,7 @@ SenUI.Dropdown = {
     end,
     ---@endsection
 
-    ---@section draw Draws the element onto the canvas
+    ---@section draw
     ---@param self SenUIDropdown
     draw = function(self, x, y)
         --draw background rect with height dependant on open or not (and #options)
@@ -66,3 +67,4 @@ SenUI.Dropdown = {
     end,
     ---@endsection
 }
+---@endsection __SENUIDROPDOWN__

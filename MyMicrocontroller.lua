@@ -77,10 +77,11 @@ function onTick()
     end
 
     --Playing with colors
-    color2 = color2:convertToHSV() --If you have issues with these functions, it's probably because the STColor is already in the form you're converting to
     if down then
         --rainbow mode
+        color2 = color2:toHSV() --If you have issues with these functions, it's probably because the STColor is already in the form you're converting to
         color2.h = (color2.h + 1) % 360
+        color2:toRGB()
     end
 end
 
@@ -90,11 +91,8 @@ function onDraw()
     --Just drawing some debug stuff
     screen.setColor(color:open())
     screen.drawRectF(20,20,10,10)
-    if color2.type > 0 then
-        screen.setColor(color2:convertToRGB():open())
-    else
-        screen.setColor(color2:open())
-    end
+
+    screen.setColor(color2:open())
     screen.drawRectF(40,20,10,10)
     screen.drawText(1, 1, color2.r)
 

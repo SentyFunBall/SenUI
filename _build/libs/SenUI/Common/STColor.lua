@@ -15,9 +15,10 @@ require("SenUI.Common.Base")
 ---@field h number Hue value
 ---@field s number Saturation value
 ---@field v number Value value
----@field type string Type of color
+---@field type number Type of color
+---@section Color 1 __STCOLOR__
 SenUI.Color = {
-    ---@section new Creates a new color object as RGB
+    ---@section new
     ---@param r number Red value
     ---@param g number Green value
     ---@param b number Blue value
@@ -37,7 +38,7 @@ SenUI.Color = {
     end,
     ---@endsection
 
-    ---@section unpack Unpacks the color object into a table
+    ---@section open
     ---@param self STColor
     ---@param mode string Mode to unpack the color in: flat - returns the color in 0-1 range (returns 4 values), table - returns the color as a table
     ---@overload fun():table
@@ -68,10 +69,10 @@ SenUI.Color = {
     end,
     ---@endsection
 
-    ---@section convertToHSV Converts RGB to HSV via a table
+    ---@section toHSV
     ---@param self STColor
     ---@return STColor color Color object
-    convertToHSV = function(self)
+    toHSV = function(self)
         local r, g, b, a = self:open("flat")
         self.r,self.g,self.b = nil,nil,nil
         local max, min, d = math.max(r, g, b), math.min(r, g, b), math.max(r, g, b) - math.min(r, g, b)
@@ -89,10 +90,10 @@ SenUI.Color = {
     end,
     ---@endsection
 
-    ---@section converToRGB Converts HSV to RGB via a table
+    ---@section toRGB
     ---@param self STColor
     ---@return STColor color Color object
-    convertToRGB = function(self)
+    toRGB = function(self)
         local h, s, v, a = self:open("flat")
         self.h,self.s,self.v = nil,nil,nil
         local f = h * 6 - math.floor(h * 6)
@@ -107,7 +108,7 @@ SenUI.Color = {
     end,
     ---@endsection
 
-    ---@section gammaCorrect Gamma corrects the color for Stormworks terrible gamma
+    ---@section gammaCorrect
     ---@param self STColor
     ---@return STColor color Color object
     gammaCorrect= function(self)
@@ -120,3 +121,4 @@ SenUI.Color = {
     end,
     ---@endsection
 }
+---@endsection __STCOLOR__
