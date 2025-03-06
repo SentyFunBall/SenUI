@@ -52,17 +52,18 @@ color2 = SenUI.Copy(color)
 
 canvas = SenUI.Canvas.new(5, 40)
 
+bgColor = SenUI.Color.new(200,200,200)
+txColor = SenUI.Color.new(100,100,100)
+
 --be sure to keep track of the elements. SenUI does, you should as well.
 canvas:addElement(SenUI.Gradient.new(0, 0, 96, 96, 32, false, SenUI.Color.new(47, 51, 78), SenUI.Color.new(128, 95, 164)))
-toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
-canvas:addElement(SenUI.Toggle.new(false, "Toggle2", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
+toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", bgColor, txColor))
+canvas:addElement(SenUI.Toggle.new(false, "Toggle2",bgColor ,txColor))
 
-drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"}, SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100))
+drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"},bgColor, txColor)
 dropId = canvas:addElement(drop)
 
-canvas:addElement(SenUI.Toggle.new(false, "Toggle3", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100)))
-btn = SenUI.Button.new("Button", SenUI.Color.new(200, 200, 200), SenUI.Color.new(100, 100, 100))
-btnId = canvas:addElement(btn)
+canvas:addElement(SenUI.Toggle.new(false, "Toggle3",bgColor, txColor))
 
 function onTick()
     press = input.getBool(1) and not down
@@ -105,4 +106,3 @@ function onDraw()
     scroll = canvas.scrollPixels
     screen.drawText(0, textHeight - scroll, "Ha!")
 end
-

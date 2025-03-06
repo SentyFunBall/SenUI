@@ -18,7 +18,7 @@ SenUI.Copy = function(from, to, overwrite)
     return to
 end
 
----@section lerp Linearly interpolates between two colors
+---@section ColLerp
 ---@param start STColor
 ---@param endColor STColor Color to interpolate to
 ---@param t number Interpolation value
