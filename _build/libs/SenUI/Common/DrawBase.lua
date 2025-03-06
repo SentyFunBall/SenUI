@@ -36,24 +36,13 @@ SenUI.DrawBase = {
     end,
     ---@endsection
 
-    ---@section calculateHeightOffsets
-    ---@param elements table<SenUIDrawable> List of elements to calculate the height offsets for
-    ---@return table<number> Height offsets of the elements
-    calculateHeightOffsets = function(elements)
-        local total = 0
-        local heightOffsets = {}
-        for _, element in ipairs(elements) do
-            if _ > 1 then
-                if element.type == 1 then -- SenUIToggle
-                    total = total + 11
-                elseif element.type == 2 then -- SenUIDropdown
-                    total = total + 11
-                end
-            end
-            heightOffsets[element.id] = total
-        end
-        return heightOffsets
-    end,
+    ---@section isInBounds
+    ---@param canvas SenUICanvas Element to check
+    ---@return boolean inBounds If the element is in bounds
+    isInBounds = function(canvas, index)
+        local ho = (canvas.heightOffsets[index] and canvas.heightOffsets[index] or 0)
+        return canvas.y + ho - canvas.scrollPixels-1 > 0 and canvas.y + ho - canvas.scrollPixels-1 < index.height
+    end
     ---@endsection
 }
 ---@endsection __SENUIDRAWABLE__
