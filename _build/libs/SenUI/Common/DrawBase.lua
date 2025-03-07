@@ -44,7 +44,7 @@ SenUI.DrawBase = {
         local heightOffsets = {}
         for _, element in ipairs(elements) do
             if _ > 1 then
-                if element.type == 1 then -- SenUIToggle
+                if element.type == 1 or element.type == 3 then -- SenUIToggle|SenUIButton
                     total = total + 11
                 elseif element.type == 2 then -- SenUIDropdown
                     total = total + 11

@@ -70,9 +70,7 @@ function onTick()
     touchX = input.getNumber(3)
     touchY = input.getNumber(4)
 
-    if press then --Always run the processTick only during a touch.
-        canvas:processTick(touchX, touchY)
-    end
+    canvas:processTick(touchX, touchY, down)
 
     -- Externally toggle an element
     externalToggle = input.getBool(2) --Assume pulse input
@@ -104,5 +102,12 @@ function onDraw()
     textHeight = 30
     scroll = canvas.scrollPixels
     screen.drawText(0, textHeight - scroll, "Ha!")
+
+    --demo btn
+    screen.setColor(255,255,255)
+    screen.drawText(10, 10, btn.pressed)
+    if btn.pressed then
+        screen.drawRectF(90,90,6,6)
+    end
 end
 
