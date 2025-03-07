@@ -47,7 +47,7 @@ SenUI.Button = {
         SenUI.DrawBase.drawRoundedRect(x, y, textOffset, 8)
 
         if self.pressed then
-            SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
+            screen.setColor(0, 0, 0, 200)
             SenUI.DrawBase.drawRoundedRect(x, y, textOffset, 8)
         end
 

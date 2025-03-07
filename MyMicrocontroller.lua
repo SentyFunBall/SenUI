@@ -50,7 +50,7 @@ require("SenUI")
 color = SenUI.Color.new(255, 0, 0)
 color2 = SenUI.Copy(color)
 
-canvas = SenUI.Canvas.new(5, 40, 69, 56)
+canvas = SenUI.Canvas.new(5, 40, 90, 56)
 
 bgColor = SenUI.Color.new(200,200,200)
 txColor = SenUI.Color.new(100,100,100)

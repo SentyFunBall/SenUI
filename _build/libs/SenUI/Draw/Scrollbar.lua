@@ -13,6 +13,8 @@ require("SenUI.Common.DrawBase")
 ---@field color STColor Color of the scrollbar
 ---@field type number Type of the element. (Internal use only)
 ---@field id number ID of the element. (Internal use only)
+---@field up boolean Whether the up arrow is pressed
+---@field down boolean Whether the down arrow is pressed
 ---@section Scrollbar 1 __SENUISCROLLBAR__
 SenUI.Scrollbar = {
     ---@section new
@@ -22,6 +24,8 @@ SenUI.Scrollbar = {
         local this = SenUI.New(SenUI.Scrollbar)
         this.color = color
         this.type = -2
+        this.up = false
+        this.down = false
         this.id = -1
         return this
     end,
@@ -34,9 +38,9 @@ SenUI.Scrollbar = {
     ---@param self SenUIScrollbar
     draw = function(self, x, y, height)
         SenUI.DrawBase.setColor(self.color)
-        screen.drawRect(x-6, y, 6, height/2)
-        screen.drawRect(x-6, y + height/2, 6, height/2)
+        SenUI.DrawBase.drawRoundedRect(x-6, y, 6, height-1)
 
+        screen.setColor(50,50,50)
         --up arrow
         screen.drawRectF(x-5, y + height/4+1, 5, 1)
         screen.drawRectF(x-4, y + height/4, 3, 1)
@@ -46,6 +50,18 @@ SenUI.Scrollbar = {
         screen.drawRectF(x-5, y + height*3/4-1, 5, 1)
         screen.drawRectF(x-4, y + height*3/4, 3, 1)
         screen.drawRectF(x-3, y + height*3/4+1, 1, 1)
+
+        --covers
+        screen.setColor(0,0,0,200)
+        if self.up then
+            SenUI.DrawBase.drawRoundedRect(x-6, y, 6, height/2+1)
+        end
+        if self.down then
+            SenUI.DrawBase.drawRoundedRect(x-6, y + height/2, 6, height/2-1)
+        end
+
+        screen.setColor(50,50,50)
+        screen.drawRect(x-6, y + height/2, 6, 1)
     end,
     ---@endsection
 }
