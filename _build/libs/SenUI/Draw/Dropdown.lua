@@ -43,12 +43,12 @@ SenUI.Dropdown = {
     ---@param self SenUIDropdown
     draw = function(self, x, y)
         --draw background rect with height dependant on open or not (and #options)
-        SenUI.DrawBase.setColor(self.backgroundColor)
+        SenUI.setColor(self.backgroundColor)
         local width = #self.title * 5 + 15
-        SenUI.DrawBase.drawRoundedRect(x, y, width, self.open and #self.options * 9 + 5 or 8)
+        SenUI.drawRoundedRect(x, y, width, self.open and #self.options * 9 + 5 or 8)
 
         --draw static UI
-        SenUI.DrawBase.setColor(self.textColor)
+        SenUI.setColor(self.textColor)
         screen.drawText(x + 9, y + 2, self.title)
         screen.drawText(x + 2, y + 2, self.open and "-" or "+")
         screen.drawLine(x + 7, y, x + 7, y + 9)
@@ -59,9 +59,9 @@ SenUI.Dropdown = {
             for i = 1, #self.options do
                 screen.drawText(x + 2, y + 2 + i * 8, self.options[i])
                 if self.selected == i then
-                    SenUI.DrawBase.setColor(SenUI.Color.new(50, 50, 50, 200))
+                    SenUI.setColor(SenUI.Color.new(50, 50, 50, 200))
                     screen.drawRectF(x, y + 1 + i * 8, width + 1, 7)
-                    SenUI.DrawBase.setColor(self.textColor)
+                    SenUI.setColor(self.textColor)
                 end
             end
         end

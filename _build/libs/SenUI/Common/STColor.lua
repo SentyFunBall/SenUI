@@ -28,12 +28,7 @@ SenUI.Color = {
     ---@return STColor color Color object
     new = function(r, g, b, a)
         local this = SenUI.New(SenUI.Color)
-        if type(r) == "table" then
-            this.r, this.g, this.b, this.a = r[1], r[2], r[3], r[4] or 255
-        else
-            this.r, this.g, this.b, this.a = r, g, b, a or 255
-        end
-        this.type = 0
+        this.r, this.g, this.b, this.a, this.type = r, g, b, a or 255, 0
         return this
     end,
     ---@endsection
@@ -117,7 +112,7 @@ SenUI.Color = {
         for i in pairs(_) do
             _[i]=_[i]^2.2/255^2.2*_[i]
         end
-        return SenUI.Color.new(_)
+        return SenUI.Color.new(table.unpack(_))
     end,
     ---@endsection
 }

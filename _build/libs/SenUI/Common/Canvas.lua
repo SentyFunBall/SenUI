@@ -50,15 +50,13 @@ SenUI.Canvas = {
     ---@param touchX number X position of the touch
     ---@param touchY number Y position of the touch
     ---@param touch boolean If the screen is being touched
-    processTick = function(self, touchX, touchY, touch)
+    processTick = function(self, touchX, touchY, touch) --this is a hellish function that I wish I could simplify
         self.pulse = touch and not self.hold
         self.hold = touch
+        self.cooldown = math.max(self.cooldown - 1, 0) --cooldown for the canvas elements for clicking (yes I know table lookups are slow but I don't care)
+
         local function isPointInRectangle(rx, ry, rw, rh)
             return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + (rh and rh or 9)
-        end
-
-        if self.cooldown > 0 then
-            self.cooldown = self.cooldown - 1
         end
 
         --pulse elements (toggle, dropdown)
@@ -97,7 +95,7 @@ SenUI.Canvas = {
 
         --hold elements
         if touch then
-            for _, element in pairs(self.elements) do
+            for _, element in ipairs(self.elements) do
                 local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
                 local available = not self.inUse and self.cooldown == 0
                 if available then
@@ -144,11 +142,10 @@ SenUI.Canvas = {
         local drawable = SenUI.Copy(self.elements, {}, true)
         --if any element is open, remove it from the list, shift the rest up, and add it to the end
         if self.inUse then
-            for i = 1, #drawable do
-                if drawable[i].open then
-                    local el = drawable[i]
+            for i, element in pairs(drawable) do
+                if element.open then
                     table.remove(drawable, i)
-                    table.insert(drawable, el)
+                    table.insert(drawable, element)
                     break
                 end
             end
@@ -156,28 +153,9 @@ SenUI.Canvas = {
 
         --draw elements, taking both scroll and heightOffsets into account
         for _, element in pairs(drawable) do
-                local ho = (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0)
-                local y = self.y + ho - self.scrollPixels
-
-                if element.type == -2 then -- SenUIScrollbar
-                    element:draw(self.x+self.width, self.y, self.height)
-                elseif element.type == 0 then -- SenUIGradient
-                    element:draw()
-                elseif element.type == 1 then -- SenUIToggle
-                    element:draw(self.x, y)
-                    if self.inUse then
-                        SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
-                        SenUI.DrawBase.drawRoundedRect(self.x, y, #element.text * 5 + 15, 8)
-                    end
-                elseif element.type == 2 then -- SenUIDropdown
-                    element:draw(self.x, y)
-                elseif element.type == 3 then -- SenUIButton
-                    element:draw(self.x, y)
-                    if self.inUse then
-                        SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
-                        SenUI.DrawBase.drawRoundedRect(self.x, y, #element.text * 5 + 3, 8)
-                    end
-                end
+            local ho = (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0)
+            local y = self.y + ho - self.scrollPixels
+            SenUI.drawElement(self, element, self.x, y)
         end
     end,
     ---@endsection
@@ -190,27 +168,17 @@ SenUI.Canvas = {
         element.id = #self.elements + 1
         table.insert(self.elements, element)
 
-        local moveableElements = {}
-        for _, element in pairs(self.elements) do
-            if element.type > 0 then
-                table.insert(moveableElements, element)
-            end
-        end
-
+        --get height offsets. elements with types < 0 are not subject to moving
         local total = 0
         self.heightOffsets = {}
-        for _, element in ipairs(moveableElements) do
-            if _ > 1 then
-                if element.type == 1 or element.type == 3 then -- SenUIToggle|SenUIButton
-                    total = total + 11
-                elseif element.type == 2 then -- SenUIDropdown
-                    total = total + 11
-                end
+        for _, element in ipairs(self.elements) do
+            if element.type > 0 then
+                total = total + 11
+                self.heightOffsets[element.id] = total
             end
-            self.heightOffsets[element.id] = total
         end
 
-        --add/remove scrollbar if needed
+        --add scrollbar if needed
         if #self.heightOffsets > 1 and self.heightOffsets[#self.heightOffsets] + 11 > self.height then
             if not self.scrollable then
                 self.scrollable = true
@@ -218,7 +186,7 @@ SenUI.Canvas = {
             end
         else
             if self.scrollable then
-                self:removeElement(self.sid)
+                self.elements[self.sid] = nil
                 self.scrollable = false
             end
         end

@@ -54,10 +54,10 @@ SenUI.Gradient = {
         for i = 0, self.segments do
             --Draw either vertically or horizontally based on direction
             if self.direction then --vertical
-                SenUI.DrawBase.setColor(SenUI.ColLerp(self.startColor, self.endColor, i / self.segments))
+                SenUI.setColor(SenUI.ColLerp(self.startColor, self.endColor, i / self.segments))
                 screen.drawRectF(self.x, self.y + i * segmentWidth, self.w, segmentWidth)
             else --horizontal
-                SenUI.DrawBase.setColor(SenUI.ColLerp(self.startColor, self.endColor, i / self.segments))
+                SenUI.setColor(SenUI.ColLerp(self.startColor, self.endColor, i / self.segments))
                 screen.drawRectF(self.x + i * segmentWidth, self.y, segmentWidth, self.h)
             end
         end

@@ -37,8 +37,8 @@ SenUI.Scrollbar = {
     ---@param height number Height of the scrollbar
     ---@param self SenUIScrollbar
     draw = function(self, x, y, height)
-        SenUI.DrawBase.setColor(self.color)
-        SenUI.DrawBase.drawRoundedRect(x-6, y, 6, height-1)
+        SenUI.setColor(self.color)
+        SenUI.drawRoundedRect(x-6, y, 6, height-1)
 
         screen.setColor(50,50,50)
         --up arrow
@@ -54,10 +54,10 @@ SenUI.Scrollbar = {
         --covers
         screen.setColor(0,0,0,200)
         if self.up then
-            SenUI.DrawBase.drawRoundedRect(x-6, y, 6, height/2+1)
+            SenUI.drawRoundedRect(x-6, y, 6, height/2+1)
         end
         if self.down then
-            SenUI.DrawBase.drawRoundedRect(x-6, y + height/2, 6, height/2-1)
+            SenUI.drawRoundedRect(x-6, y + height/2, 6, height/2-1)
         end
 
         screen.setColor(50,50,50)
