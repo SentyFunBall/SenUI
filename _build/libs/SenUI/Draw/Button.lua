@@ -43,17 +43,17 @@ SenUI.Button = {
     ---@param self SenUIButton
     draw = function(self, x, y)
         SenUI.DrawBase.setColor(self.backgroundColor)
-        local textOffset = #self.text * 5 + 5
+        local textOffset = #self.text * 5 + 3
         SenUI.DrawBase.drawRoundedRect(x, y, textOffset, 8)
 
         if self.pressed then
-            SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 100))
-            SenUI.DrawBase.drawRoundedRect(x + 1, y + 1, textOffset, 8)
+            SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
+            SenUI.DrawBase.drawRoundedRect(x, y, textOffset, 8)
         end
 
         --draw button
         SenUI.DrawBase.setColor(self.textColor)
-        screen.drawText(x + 2, y - 1, self.text)
+        screen.drawText(x + 2, y + 2, self.text)
     end,
     ---@endsection
 }

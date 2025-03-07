@@ -41,7 +41,7 @@ SenUI.DrawBase = {
     ---@return boolean inBounds If the element is in bounds
     isInBounds = function(canvas, index)
         local ho = (canvas.heightOffsets[index] and canvas.heightOffsets[index] or 0)
-        return canvas.y + ho - canvas.scrollPixels-1 > 0 and canvas.y + ho - canvas.scrollPixels-1 < index.height
+        return canvas.y + ho - canvas.scrollPixels-1 > 0 and canvas.y + ho - canvas.scrollPixels-1 < canvas.height
     end
     ---@endsection
 }

@@ -50,7 +50,7 @@ require("SenUI")
 color = SenUI.Color.new(255, 0, 0)
 color2 = SenUI.Copy(color)
 
-canvas = SenUI.Canvas.new(5, 40)
+canvas = SenUI.Canvas.new(5, 40, 69, 56)
 
 bgColor = SenUI.Color.new(200,200,200)
 txColor = SenUI.Color.new(100,100,100)
@@ -65,8 +65,13 @@ dropId = canvas:addElement(drop)
 
 canvas:addElement(SenUI.Toggle.new(false, "Toggle3",bgColor, txColor))
 
+btn = SenUI.Button.new("Button", bgColor, txColor)
+canvas:addElement(btn)
+
+btn2 = SenUI.Button.new("Button2", bgColor, txColor)
+canvas:addElement(btn2)
+
 function onTick()
-    press = input.getBool(1) and not down
     down = input.getBool(1)
     touchX = input.getNumber(3)
     touchY = input.getNumber(4)
@@ -106,7 +111,7 @@ function onDraw()
 
     --demo btn
     screen.setColor(255,255,255)
-    screen.drawText(10, 10, btn.pressed)
+    screen.drawText(10, 10, btn.clicked)
     if btn.pressed then
         screen.drawRectF(90,90,6,6)
     end
