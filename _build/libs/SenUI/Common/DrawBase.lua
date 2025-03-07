@@ -35,14 +35,5 @@ SenUI.DrawBase = {
         screen.drawLine(x + w, y + 2, x + w, y + h - 1) --right
     end,
     ---@endsection
-
-    ---@section isInBounds
-    ---@param canvas SenUICanvas Element to check
-    ---@return boolean inBounds If the element is in bounds
-    isInBounds = function(canvas, index)
-        local ho = (canvas.heightOffsets[index] and canvas.heightOffsets[index] or 0)
-        return canvas.y + ho - canvas.scrollPixels-1 > 0 and canvas.y + ho - canvas.scrollPixels-1 < canvas.height
-    end
-    ---@endsection
 }
 ---@endsection __SENUIDRAWABLE__

@@ -111,7 +111,7 @@ function onDraw()
 
     --demo btn
     screen.setColor(255,255,255)
-    screen.drawText(10, 10, btn.clicked)
+    screen.drawText(10, 10, canvas.scrollPixels)
     if btn.pressed then
         screen.drawRectF(90,90,6,6)
     end

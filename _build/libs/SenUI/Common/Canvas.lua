@@ -64,33 +64,30 @@ SenUI.Canvas = {
         --pulse elements (toggle, dropdown)
         if self.pulse then
             for _, element in ipairs(self.elements) do
-                local isInBounds = SenUI.DrawBase.isInBounds(self, element)
-                if isInBounds then
-                    local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
-                    local available = not self.inUse and self.cooldown == 0
-                    if element.type == 1 and available then -- SenUIToggle
-                        --toggle if click on element (the Y and W are hell)
-                        if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1, #element.text * 5 + 15) then
-                            element:toggle()
+                local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
+                local available = not self.inUse and self.cooldown == 0
+                if element.type == 1 and available then -- SenUIToggle
+                    --toggle if click on element (the Y and W are hell)
+                    if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1, #element.text * 5 + 15) then
+                        element:toggle()
+                    end
+                elseif element.type == 2 then -- SenUIDropdown
+                    --open/close if click on title :thumbs_up:
+                    if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1, #element.title * 5 + 20) then
+                        element.open = not element.open
+                        self.inUse = element.open
+                        if not element.open then
+                            self.cooldown = 1
                         end
-                    elseif element.type == 2 then -- SenUIDropdown
-                        --open/close if click on title :thumbs_up:
-                        if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1, #element.title * 5 + 20) then
-                            element.open = not element.open
-                            self.inUse = element.open
-                            if not element.open then
-                                self.cooldown = 1
-                            end
-                        end
+                    end
 
-                        if element.open then
-                            for i = 1, #element.options do
-                                if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1 + i * 8, #element.options[i] * 5 + 20) then
-                                    element.selected = i
-                                    element.open = false
-                                    self.inUse = false
-                                    self.cooldown = 1
-                                end
+                    if element.open then
+                        for i = 1, #element.options do
+                            if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1 + i * 8, #element.options[i] * 5 + 20) then
+                                element.selected = i
+                                element.open = false
+                                self.inUse = false
+                                self.cooldown = 1
                             end
                         end
                     end
@@ -103,8 +100,7 @@ SenUI.Canvas = {
             for _, element in pairs(self.elements) do
                 local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
                 local available = not self.inUse and self.cooldown == 0
-                local isInBounds = SenUI.DrawBase.isInBounds(self, element)
-                if available and isInBounds then
+                if available then
                     if element.type == 3 then -- SenUIButton
                         --click if click on element
                         if isPointInRectangle(self.x-1, self.y + ho - self.scrollPixels-1, #element.text * 5 + 15) then
@@ -114,12 +110,12 @@ SenUI.Canvas = {
                         end
                     elseif element.type == -2 then --SenUIScrollbar
                         --top part
-                        if isPointInRectangle(self.x-6, self.y, 6, self.height/2) then
-                            self.scrollPixels = self.scrollPixels - 1
+                        if isPointInRectangle(self.x+self.width-6, self.y, 6, self.height/2) then
+                            self.scrollPixels = self.scrollPixels - (self.scrollPixels > 0 and 1 or 0)
                         end
                         --bottom part
-                        if isPointInRectangle(self.x-6, self.y + self.height/2, 6, self.height/2) then
-                            self.scrollPixels = self.scrollPixels + 1
+                        if isPointInRectangle(self.x+self.width-6, self.y + self.height/2, 6, self.height/2) then
+                            self.scrollPixels = self.scrollPixels + (self.scrollPixels < self.heightOffsets[#self.heightOffsets] and 1 or 0)
                         end
                     end
                 end
@@ -155,10 +151,11 @@ SenUI.Canvas = {
 
         --draw elements, taking both scroll and heightOffsets into account
         for _, element in pairs(drawable) do
-            local isInBounds = SenUI.DrawBase.isInBounds(self, element)
-            if isInBounds then
                 local ho = (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0)
-                if element.type == 0 then -- SenUIGradient
+
+                if element.type == -2 then -- SenUIScrollbar
+                    element:draw(self.x+self.width, self.y, self.height)
+                elseif element.type == 0 then -- SenUIGradient
                     element:draw()
                 elseif element.type == 1 then -- SenUIToggle
                     element:draw(self.x, self.y + ho - self.scrollPixels)
@@ -170,8 +167,11 @@ SenUI.Canvas = {
                     element:draw(self.x, self.y + ho - self.scrollPixels)
                 elseif element.type == 3 then -- SenUIButton
                     element:draw(self.x, self.y + ho - self.scrollPixels)
+                    if self.inUse then
+                        SenUI.DrawBase.setColor(SenUI.Color.new(0, 0, 0, 200))
+                        SenUI.DrawBase.drawRoundedRect(self.x, self.y + ho - self.scrollPixels, #element.text * 5 + 3, 8)
+                    end
                 end
-            end
         end
     end,
     ---@endsection
@@ -205,10 +205,10 @@ SenUI.Canvas = {
         end
 
         --add/remove scrollbar if needed
-        if #self.heightOffsets > 1 and self.heightOffsets[#self.heightOffsets] > self.height then
+        if #self.heightOffsets > 1 and self.heightOffsets[#self.heightOffsets] + 11 > self.height then
             if not self.scrollable then
-                self.sid = self:addElement(SenUI.Scrollbar.new(SenUI.Color.new(200, 200, 200)))
                 self.scrollable = true
+                self.sid = self:addElement(SenUI.Scrollbar.new(SenUI.Color.new(200, 200, 200)))
             end
         else
             if self.scrollable then
