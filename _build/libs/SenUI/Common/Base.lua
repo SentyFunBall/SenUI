@@ -4,12 +4,20 @@
 
 --Code by STCorp. Do not reuse.--
 
+---@section New
+---@param class table Class to create
+---@return table Class object
 SenUI.New = function(class)
     local newClass = SenUI.Copy(class)
     newClass.new = nil
     return newClass
 end
+---@endsection
 
+---@section Copy
+---@param from table Table to copy from
+---@param to? table Table to copy to
+---@param overwrite? boolean If true, will overwrite existing values in the to table
 SenUI.Copy = function(from, to, overwrite)
     local to = to or {}
     for k, v in pairs(from) do
@@ -17,6 +25,7 @@ SenUI.Copy = function(from, to, overwrite)
     end
     return to
 end
+---@endsection
 
 ---@section ColLerp
 ---@param start STColor

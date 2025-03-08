@@ -55,12 +55,12 @@ SenUI.Canvas = {
         self.hold = touch
         self.cooldown = math.max(self.cooldown - 1, 0) --cooldown for the canvas elements for clicking (yes I know table lookups are slow but I don't care)
 
-        local function isPointInRectangle(rx, ry, rw, rh)
+        function isPointInRectangle(rx, ry, rw, rh)
             return touchX > rx and touchY > ry and touchX < rx + rw and touchY < ry + (rh and rh or 9)
         end
 
         --pulse elements (toggle, dropdown)
-        if self.pulse then
+        --[[if self.pulse then
             for _, element in ipairs(self.elements) do
                 local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
                 local available = not self.inUse and self.cooldown == 0
@@ -132,6 +132,15 @@ SenUI.Canvas = {
                     element.pressed = false
                 end
             end
+        end]]
+
+        --trigger elements
+        for _, element in ipairs(self.elements) do
+            local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
+            local available = not self.inUse and self.cooldown == 0
+            if element.tick ~= nil then --static elements may not have a tick function
+                element:tick(ho, available, self, isPointInRectangle)
+            end
         end
     end,
     ---@endsection
@@ -155,7 +164,7 @@ SenUI.Canvas = {
         for _, element in pairs(drawable) do
             local ho = (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0)
             local y = self.y + ho - self.scrollPixels
-            SenUI.drawElement(self, element, self.x, y)
+            SenUI.Draw.drawElement(self, element, self.x, y)
         end
     end,
     ---@endsection

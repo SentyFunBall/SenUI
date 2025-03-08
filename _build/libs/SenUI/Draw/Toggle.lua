@@ -35,33 +35,46 @@ SenUI.Toggle = {
     end,
     ---@endsection
 
+    ---@section tick
+    ---@param self SenUIToggle
+    ---@param ho number Height offset of the element
+    ---@param available boolean
+    ---@param canvas SenUICanvas
+    ---@param isPointInRectangle function
+    tick = function(self, ho, available, canvas, isPointInRectangle)
+        if available and canvas.pulse and isPointInRectangle(canvas.x-1, canvas.y + ho - canvas.scrollPixels - 1, #self.text * 5 + 10) then
+            self:toggle()
+        end
+    end,
+    ---@endsection
+
     ---@section draw
     ---@param x number X position of the element
     ---@param y number Y position of the element
     ---@param self SenUIToggle
     draw = function(self, x, y)
-        SenUI.setColor(self.backgroundColor)
+        SenUI.Draw.setColor(self.backgroundColor)
         local textOffset = #self.text * 5 + 5
-        SenUI.drawRoundedRect(x, y, textOffset + 10, 8)
+        SenUI.Draw.drawRoundedRect(x, y, textOffset + 10, 8)
 
         --draw toggle
         y = y + 3
-        SenUI.setColor(SenUI.Color.new(100, 100, 100))
+        SenUI.Draw.setColor(SenUI.Color.new(100, 100, 100))
         screen.drawLine(textOffset + x + 1, y, textOffset + x + 8, y)
         screen.drawLine(textOffset + x, y + 1, textOffset + x + 9, y + 1)
         screen.drawLine(textOffset + x + 1, y + 2, textOffset + x + 8, y + 2)
 
         if self.state then
-            SenUI.setColor(SenUI.Color.new(100, 200, 100))
+            SenUI.Draw.setColor(SenUI.Color.new(100, 200, 100))
             screen.drawLine(textOffset + x + 7, y, textOffset + x + 7, y + 3)
             screen.drawLine(textOffset + x + 6, y + 1, textOffset + x + 9, y + 1)
         else
-            SenUI.setColor(SenUI.Color.new(200, 100, 100))
+            SenUI.Draw.setColor(SenUI.Color.new(200, 100, 100))
             screen.drawLine(textOffset + x + 1, y, textOffset + x + 1, y + 3)
             screen.drawLine(textOffset + x, y + 1, textOffset + x + 3, y + 1)
         end
 
-        SenUI.setColor(self.textColor)
+        SenUI.Draw.setColor(self.textColor)
         screen.drawText(x + 2, y - 1, self.text)
     end,
     ---@endsection

@@ -31,14 +31,41 @@ SenUI.Scrollbar = {
     end,
     ---@endsection
 
+    ---@section tick
+    ---@param self SenUIScrollbar
+    ---@param ho number Height offset of the element
+    ---@param available boolean
+    ---@param canvas SenUICanvas
+    ---@param isPointInRectangle function
+    tick = function(self, ho, available, canvas, isPointInRectangle)
+        if canvas.hold then
+            if available then
+                --top part
+                if isPointInRectangle(canvas.x+canvas.width-7, canvas.y, 8, canvas.height/2+1) then
+                    canvas.scrollPixels = canvas.scrollPixels - (canvas.scrollPixels > 0 and 1 or 0)
+                    self.up = true
+                end
+                --bottom part
+                if isPointInRectangle(canvas.x+canvas.width-7, canvas.y + canvas.height/2, 8, canvas.height/2+1) then
+                    canvas.scrollPixels = canvas.scrollPixels + (canvas.scrollPixels < canvas.heightOffsets[#canvas.heightOffsets] and 1 or 0)
+                    self.down = true
+                end
+            end
+        else
+            self.up = false
+            self.down = false
+        end
+    end,
+    ---@endsection
+
     ---@section draw
     ---@param x number X position of the element
     ---@param y number Y position of the element
     ---@param height number Height of the scrollbar
     ---@param self SenUIScrollbar
     draw = function(self, x, y, height)
-        SenUI.setColor(self.color)
-        SenUI.drawRoundedRect(x-6, y, 6, height-1)
+        SenUI.Draw.setColor(self.color)
+        SenUI.Draw.drawRoundedRect(x-6, y, 6, height-1)
 
         screen.setColor(50,50,50)
         --up arrow
@@ -54,10 +81,10 @@ SenUI.Scrollbar = {
         --covers
         screen.setColor(0,0,0,200)
         if self.up then
-            SenUI.drawRoundedRect(x-6, y, 6, height/2+1)
+            SenUI.Draw.drawRoundedRect(x-6, y, 6, height/2+1)
         end
         if self.down then
-            SenUI.drawRoundedRect(x-6, y + height/2, 6, height/2-1)
+            SenUI.Draw.drawRoundedRect(x-6, y + height/2, 6, height/2-1)
         end
 
         screen.setColor(50,50,50)

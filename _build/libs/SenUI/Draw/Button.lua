@@ -37,22 +37,41 @@ SenUI.Button = {
     end,
     ---@endsection
 
+    ---@section tick
+    ---@param self SenUIButton
+    ---@param ho number Height offset of the element
+    ---@param available boolean
+    ---@param canvas SenUICanvas
+    ---@param isPointInRectangle function
+    tick = function(self, ho, available, canvas, isPointInRectangle)
+        if canvas.hold then
+            if available and isPointInRectangle(canvas.x-1, canvas.y + ho - canvas.scrollPixels - 1, #self.text * 5 + 15) then
+                self.clicked = not self.pressed
+                self.pressed = true
+                canvas.cooldown = 1
+            end
+        else
+            self.pressed = false
+        end
+    end,
+    ---@endsection
+
     ---@section draw
     ---@param x number X position of the element
     ---@param y number Y position of the element
     ---@param self SenUIButton
     draw = function(self, x, y)
-        SenUI.setColor(self.backgroundColor)
+        SenUI.Draw.setColor(self.backgroundColor)
         local textOffset = #self.text * 5 + 3
-        SenUI.drawRoundedRect(x, y, textOffset, 8)
+        SenUI.Draw.drawRoundedRect(x, y, textOffset, 8)
 
         if self.pressed then
             screen.setColor(0, 0, 0, 200)
-            SenUI.drawRoundedRect(x, y, textOffset, 8)
+            SenUI.Draw.drawRoundedRect(x, y, textOffset, 8)
         end
 
         --draw button
-        SenUI.setColor(self.textColor)
+        SenUI.Draw.setColor(self.textColor)
         screen.drawText(x + 2, y + 2, self.text)
     end,
     ---@endsection
