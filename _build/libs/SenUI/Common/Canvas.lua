@@ -134,7 +134,7 @@ SenUI.Canvas = {
     ---@param id number ID of the element to remove
     removeElement = function(self, id)
         self.elements[id] = nil --removing like this instead of table.remove to prevent ID shifting
-    end,
+    end
     ---@endsection
 }
 ---@endsection __SENUICANVAS__

@@ -57,13 +57,13 @@ txColor = SenUI.Color.new(100,100,100)
 
 --be sure to keep track of the elements. SenUI does, you should as well.
 canvas:addElement(SenUI.Gradient.new(0, 0, 96, 96, 32, false, SenUI.Color.new(47, 51, 78), SenUI.Color.new(128, 95, 164)))
-toggleId = canvas:addElement(SenUI.Toggle.new(false, "Toggle", bgColor, txColor))
-canvas:addElement(SenUI.Toggle.new(false, "Toggle2",bgColor ,txColor))
+toggleId = canvas:addElement(SenUI.Button.new("Toggle", bgColor, txColor, "toggle", false))
+canvas:addElement(SenUI.Button.new("Toggle2", bgColor ,txColor, "toggle", true))
 
 drop = SenUI.Dropdown.new("Dropdown", {"Option1", "Option2", "Option3"},bgColor, txColor)
 dropId = canvas:addElement(drop)
 
-canvas:addElement(SenUI.Toggle.new(false, "Toggle3",bgColor, txColor))
+canvas:addElement(SenUI.Button.new("toggle3", bgColor, txColor, "toggle", false))
 
 btn = SenUI.Button.new("Button", bgColor, txColor)
 canvas:addElement(btn)
