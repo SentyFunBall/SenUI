@@ -113,7 +113,7 @@ SenUI.Color = {
             _[i]=_[i]^2.2/255^2.2*_[i]
         end
         return SenUI.Color.new(table.unpack(_))
-    end,
+    end
     ---@endsection
 }
 ---@endsection __STCOLOR__

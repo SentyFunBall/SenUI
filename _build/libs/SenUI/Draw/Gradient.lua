@@ -61,7 +61,7 @@ SenUI.Gradient = {
                 screen.drawRectF(self.x + i * segmentWidth, self.y, segmentWidth, self.h)
             end
         end
-    end,
+    end
     ---@endsection
 }
 ---@endsection __SENUIGRADIENT__

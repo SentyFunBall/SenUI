@@ -34,7 +34,7 @@ SenUI.Dropdown = {
         this.textColor = textColor
         this.selected = selected or 1
         this.open = false
-        this.type = 2
+        this.type = 3
         return this
     end,
     ---@endsection
@@ -98,7 +98,7 @@ SenUI.Dropdown = {
                 end
             end
         end
-    end,
+    end
     ---@endsection
 }
 ---@endsection __SENUIDROPDOWN__

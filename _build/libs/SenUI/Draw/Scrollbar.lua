@@ -89,7 +89,7 @@ SenUI.Scrollbar = {
 
         screen.setColor(50,50,50)
         screen.drawRect(x-6, y + height/2, 6, 1)
-    end,
+    end
     ---@endsection
 }
 ---@endsection __SENUISCROLLBAR__

@@ -48,7 +48,7 @@ SenUI.Draw = {
             element:draw()
         else
             element:draw(x, y)
-            if element.type == 1 or element.type == 3 then -- SenUIToggle or SenUIButton
+            if element.type == 1 or element.type == 2 then -- SenUIToggle or SenUIButton
                 if canvas.inUse then
                     SenUI.Draw.setColor(SenUI.Color.new(0, 0, 0, 200))
                     SenUI.Draw.drawRoundedRect(x, y, #element.text * 5 + (element.type == 1 and 15 or 3), 8)
