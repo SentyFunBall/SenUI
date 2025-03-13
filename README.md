@@ -11,26 +11,37 @@ For detailed documentation on each function and information on how SenUI works, 
 ## Quick Start
 Getting SenUI in a ready-to-use state is as easy as four simple steps:
 ### 1. Import SenUI
-At the top of this repository, click the `<> Code` button, and copy the URL. Or copy this URL: `https://github.com/SentyFunball/SenUI.git`. In Visual Studio Code after instaling the LifeBoatAPI extension, click `File -> New File...` and create a new Microcontroller Project. Place the project anywhere on your computer. In the `_build` folder on the left toolbar, right-click it and select `Stormworks: Add Library from URL` and paste the URL to SenUI. *Another option is to download this repository and copy the SenUI folder into your project's `_build/libs/` folder.*
+1. In Visual Studio Code after instaling the LifeBoatAPI extension, click `File -> New File...` and create a new Microcontroller Project. Place the project anywhere on your computer.
+2. Download and unzip this repository by clicking the `<> Code` button near the top, and copy the `SenUI` folder inside the unzipped folder into your project's `_build/libs` folder, so the structure looks like:
+    ```
+    project/
+    `-- _build/
+    |   `-- libs/
+    |       `-- LifeBoatAPI/
+    |       `-- SenUI/
+    `-- MyMicrocontroller.lua
+    ```
 
-From there in `MyMicrocontroller.lua`, add the following code snippet above the `onTick()` function:
+3. From there in `MyMicrocontroller.lua`, add the following code snippet above the `onTick()` function:
+
 	```lua
-	require("StormSL")
-	```
-    
+	require("SenUI")
+    ```
 ### 2. Create Canvas
-After importing the library, the next step is to use it. The main structure of SenUI is Canvases, which store elements. The Canvas will automatically manage elements, element placement, element touch management, and element drawing. To create one is as simple as writing the following near the top of the code:
+1. After importing the library, the next step is to use it. The main structure of SenUI is Canvases, which store elements. The Canvas will automatically manage elements, element placement, element touch management, and element drawing. To create one is as simple as writing the following near the top of the code:
+
     ```lua
     myCanvas = SenUI.Canvas.new(x, y, width, height)
     ```
-The parameters (all optional) include:
 
-1. `x` - The X coordinate of the Canvas. Will place all elements starting at this upper-left corner. Screen space (Top left of the screen is (0,0)).
-2. `y` - The Y coordinate of the Canvas. Will place all elements starting at this upper-left corner. Screen space (Top left of the screen is (0,0)).
-3. `width` - The width of the Canvas. It is recommened to make it at least as wide as the elements, or just as wide as the screen.
-4. `height` - Height of the canvas. Recommended to make it as high as the screen, scrolling may not function correctly otherwise.
+2. The parameters (all optional) include:
+    1. `x` - The X coordinate of the Canvas. Will place all elements starting at this upper-left corner. Screen space (Top left of the screen is (0,0)).
+    2. `y` - The Y coordinate of the Canvas. Will place all elements starting at this upper-left corner. Screen space (Top left of the screen is (0,0)).
+    3. `width` - The width of the Canvas. It is recommened to make it at least as wide as the elements, or just as wide as the screen.
+    4. `height` - Height of the canvas. Recommended to make it as high as the screen, scrolling may not function correctly otherwise.
 
-Other examples of creating a Canvas:
+3. Other examples of creating a Canvas:
+
     ```lua
     myCanvas = SenUI.Canvas.new()
 
@@ -39,7 +50,8 @@ Other examples of creating a Canvas:
     myCanvas = SenUI.Canvas.new(32, 1)
     ```
 
-And the full code should now look something like this:
+4. And the full code should now look something like this:
+
     ```lua
     require("SenUI")
 
@@ -51,7 +63,8 @@ And the full code should now look something like this:
     ```
 
 ### 3. Create Colors & Elements
-Add buttons, dropdowns, toggle switches, and more:
+1. Add buttons, dropdowns, toggle switches, and more:
+
     ```lua
     --Create colors
     backgroundColor = SenUI.Color.new(100, 100, 100) --R, G, B, and optional Alpha
@@ -67,7 +80,8 @@ Add buttons, dropdowns, toggle switches, and more:
     ```
 
 ### 4. Use Elements
-Process the touch inputs and draw the Elements:
+1. Process the touch inputs and draw the Elements:
+
     ```lua
     function onTick()
         --Get monitor inputs
@@ -89,10 +103,9 @@ Process the touch inputs and draw the Elements:
     end
     ```
 
-Drawing and processing elements with SenUI is as simple as writing a few lines of code.
+2. Drawing and processing elements with SenUI is as simple as writing a few lines of code.
 
 ---
 ## Contributing
 SenUI, being a free and open source code library, is free for contributing to as well. If you'd like to contribute to SenUI, please fork the repository, make any changes yourself, and create a pull request here. Changes may or may not be accepted and merged in an update.
 
----
