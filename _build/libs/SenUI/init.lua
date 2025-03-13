@@ -2,9 +2,13 @@
 -- GitHub: https://github.com/SentyFunBall
 -- Code by STCorp. Do not reuse.--
 
----@section SenUI
-SenUI = {}
----@endsection
+---@section SenUI 1 __SENUIMAIN__
+SenUI = {
+    ---@section SenUIVersion
+    SenUIVersion = "1.0.0",
+    ---@endsection
+}
+---@endsection __SENUIMAIN__
 
 require("SenUI.Common.Base")
 require("SenUI.Common.Canvas")
