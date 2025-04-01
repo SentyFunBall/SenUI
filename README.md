@@ -14,7 +14,7 @@ A changelog is also availble [here](https://github.com/sentyfunball/senui/tree/m
 Getting SenUI in a ready-to-use state is as easy as four simple steps:
 ### 1. Import SenUI
 1. In Visual Studio Code after instaling the LifeBoatAPI extension, click `File -> New File...` and create a new Microcontroller Project. Place the project anywhere on your computer.
-2. Download and unzip this repository by clicking the `<> Code` button near the top, and copy the `SenUI` folder inside the unzipped folder into your project's `_build/libs` folder, so the structure looks like:
+2. Go to the releases tab (or click [here](https://github.com/sentyfunball/senui/releases/), download the latest version of SenUI.zip (Currently SenUI-v1.0.zip), extract it, and copy the enclosing SenUI folder into your project's `_build/lips` folder. Altnative option: download and unzip this repository by clicking the `<> Code` button near the top, and copy the `SenUI` folder inside the unzipped folder into your project's `_build/libs` folder. Either way, the project structure should look like this:
     ```
     project/
     `-- _build/
