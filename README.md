@@ -4,7 +4,9 @@ SenUI is a lighweight, simple and easy to use object-oriented (If you don't know
 
 SenUI features several impressive UI elements at first, Push buttons, Toggle switches, and Dropdown menus, with Sliders, Checkboxes, Progress bars, Animations, and more planned. SenUI is powerful and efficient, drawing as few shapes to the screen as possible to maintain incredibly high performance with complex displays.
 
-For detailed documentation on each function and information on how SenUI works, click here.
+For detailed documentation on each function and information on how SenUI works, click [here](https://github.com/sentyfunball/senui/tree/main/docs.md).
+
+A changelog is also availble [here](https://github.com/sentyfunball/senui/tree/main/changelog.md).
 
 ---
 

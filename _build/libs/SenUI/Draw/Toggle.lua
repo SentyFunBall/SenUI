@@ -7,7 +7,7 @@
 require("SenUI.Common.Base")
 require("SenUI.Common.DrawBase")
 
----Toggle class. Used to create a toggle element
+---(DEPRECATED, USE BUTTON CLASS) Toggle class. Used to create a toggle element
 ---@class SenUIToggle: SenUIDrawable
 ---@field state boolean State of the toggle
 ---@field text string Text to display on the toggle
