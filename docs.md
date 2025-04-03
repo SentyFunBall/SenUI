@@ -47,7 +47,7 @@ The canvas is the most essential class to SenUI. It manages every element on the
 ### Properties
 - `elements` (table: SenUIDrawable): The table of stored elements.
 - `scrollPixels` (number): The current amount of pixels scrolled vertically from 0.
-- `inUse` (boolean): True if any dropdown element is opened up on the canvas. Prevents accidental interacts with other dropdowns, buttons, and toggle switches while using a dropdown.
+- `inUse` (boolean): True if any dropdown element is opened on the canvas. Prevents accidental interactions with other dropdowns, buttons, and toggle switches while using a dropdown.
 - `heightOffsets` (table: Number): Compounded element height for vertical placement during drawing stage. Calculated on element add/remove.
 - `scrollable` (boolean): Whether the canvas has a scroll bar rendered or not.
 - `cooldown` (number): After an interaction, a cooldown is instantiated to prevent rapid touches (For example, clicking a toggle under a dropdown after selecting a dropdown element).
@@ -197,7 +197,7 @@ The gradient class is used to create 1D gradients on the screen. Gradients can b
   - `direction` (boolean): Direction of the gradient (`false` for horizontal, `true` for vertical).
   - `startColor` (STColor): Start color of the gradient.
   - `endColor` (STColor): End color of the gradient.
-  - `draw()` Draws the gradient on the screen.
+- `draw()` Draws the gradient on the screen.
   - **Pre-condition:** The gradient is properly initialized.
 
 ### Properties
