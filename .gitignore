@@ -8,3 +8,4 @@ _/build/libs/.DS_STORE
 SenUI.code-workspace
 _build/_debug_simulator_log.txt
 _build/_simulator.lua
+_build/libs/SenUI-v1.0.zip

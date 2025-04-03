@@ -21,7 +21,7 @@ require("SenUI.Common.DrawBase")
 ---@field id number ID of the element. (Internal use only)
 ---@section Gradient 1 __SENUIGRADIENT__
 SenUI.Gradient = {
-    ---@section new
+    ---@section new Creates an instance of a gradient
     ---@param x number X position of the gradient (Ignores automatic element placement)
     ---@param y number Y position of the gradient (Ignores automatic element placement)
     ---@param w number Width of the gradient
