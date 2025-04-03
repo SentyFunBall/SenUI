@@ -4,6 +4,8 @@ SenUI is a lighweight, simple and easy to use object-oriented (If you don't know
 
 SenUI features several impressive UI elements at first, Push buttons, Toggle switches, and Dropdown menus, with Sliders, Checkboxes, Progress bars, Animations, and more planned. SenUI is powerful and efficient, drawing as few shapes to the screen as possible to maintain incredibly high performance with complex displays.
 
+![SenUI with a simple demo including buttons, toggle switches, a gradient, and dropdowns](/imgs/20250403141725_1.jpg)
+
 For detailed documentation on each function and information on how SenUI works, click [here](https://github.com/sentyfunball/senui/tree/main/docs.md).
 
 A changelog is also availble [here](https://github.com/sentyfunball/senui/tree/main/changelog.md).
@@ -108,6 +110,9 @@ Getting SenUI in a ready-to-use state is as easy as four simple steps:
 2. Drawing and processing elements with SenUI is as simple as writing a few lines of code.
 
 ---
-## Contributing
-SenUI, being a free and open source code library, is free for contributing to as well. If you'd like to contribute to SenUI, please fork the repository, make any changes yourself, and create a pull request here. Changes may or may not be accepted and merged in an update.
+## Contributing & Issues
+SenUI, being a free and open source code library, is free for contributing to as well. If you'd like to contribute to SenUI, please fork the repository, make any changes yourself, and create a [pull request](https://github.com/SentyFunBall/SenUI/pulls). Changes may or may not be accepted and merged in an update.
 
+If you discover an issue in SenUI, you are encouraged to report it with the [Issues](https://github.com/sentyfunball/senui/issues) tab above.
+
+SenUI is licenced under the 
