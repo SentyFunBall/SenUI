@@ -66,8 +66,8 @@ SenUI.Button = {
     ---@param self SenUIButton
     draw = function(self, x, y)
         SenUI.Draw.setColor(self.backgroundColor)
-        local textOffset = #self.text * 5 + (self.type == 1 and 3 or 20)
-        SenUI.Draw.drawRoundedRect(x, y, textOffset, 8)
+        local textOffset = #self.text * 5 + (self.type == 1 and 3 or 5)
+        SenUI.Draw.drawRoundedRect(x, y, textOffset + (self.type == 1 and 0 or 10), 8)
 
         if self.type == 1 then --btn
             if self.pressed then

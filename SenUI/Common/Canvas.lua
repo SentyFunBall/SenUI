@@ -61,7 +61,7 @@ SenUI.Canvas = {
 
         --trigger elements
         for _, element in ipairs(self.elements) do
-            local ho = (self.heightOffsets[_] and self.heightOffsets[_] or 0)
+            local ho = self.heightOffsets[_] and self.heightOffsets[_] or 0
             local available = not self.inUse and self.cooldown == 0
             if element.tick ~= nil then --static elements may not have a tick function
                 element:tick(ho, available, self, isPointInRectangle)
@@ -87,7 +87,7 @@ SenUI.Canvas = {
 
         --draw elements, taking both scroll and heightOffsets into account
         for _, element in pairs(drawable) do
-            local ho = (self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0)
+            local ho = self.heightOffsets[element.id] and self.heightOffsets[element.id] or 0
             local y = self.y + ho - self.scrollPixels
             SenUI.Draw.drawElement(self, element, self.x, y)
         end

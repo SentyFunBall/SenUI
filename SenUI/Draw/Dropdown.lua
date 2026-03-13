@@ -48,7 +48,7 @@ SenUI.Dropdown = {
     tick = function(self, ho, available, canvas, isPointInRectangle)
         --open/close if click on title :thumbs_up:
         if canvas.pulse then
-            if isPointInRectangle(canvas.x-1, canvas.y + ho - canvas.scrollPixels - 1, #self.title * 5 + 20) then
+            if available and isPointInRectangle(canvas.x-1, canvas.y + ho - canvas.scrollPixels - 1, #self.title * 5 + 20) then
                 self.open = not self.open
                 canvas.inUse = self.open
                 if not self.open then
